@@ -1,0 +1,4 @@
+# local verification / scratch artifacts
+_*.png
+_verify*.html
+_edge_log.txt
