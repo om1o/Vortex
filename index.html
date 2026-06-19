@@ -548,6 +548,10 @@
 
   <script type="module">
     import * as THREE from 'three';
+    import { EffectComposer } from './libs/jsm/postprocessing/EffectComposer.js';
+    import { RenderPass } from './libs/jsm/postprocessing/RenderPass.js';
+    import { UnrealBloomPass } from './libs/jsm/postprocessing/UnrealBloomPass.js';
+    import { OutputPass } from './libs/jsm/postprocessing/OutputPass.js';
 
     // ---- Scenes on one scroll timeline (can → ocean → man) --------------
     const CAN   = { count: 477, w: 880,  h: 720, fit: 'contain', path: (n) => `frames/frame_${String(n).padStart(4, '0')}.jpg` };
@@ -627,7 +631,7 @@
     }
 
     // ---- Three.js scene --------------------------------------------------
-    let renderer, scene, camera, mesh;
+    let renderer, scene, camera, mesh, composer, bloomPass;
     let currentProgress = 0, targetProgress = 0, shownFrame = -1, curScene = CAN, lastCenter = -999;
 
     function initScene() {
@@ -658,9 +662,51 @@
         new THREE.MeshBasicMaterial({ map: SCENES[0].tex })
       );
       scene.add(mesh);
+      initParticles();
+
+      // Bloom — runs only on the full-bleed (cover) scenes so it can't disturb
+      // the can scene's transparent gradient sides.
+      composer = new EffectComposer(renderer);
+      composer.addPass(new RenderPass(scene, camera));
+      bloomPass = new UnrealBloomPass(new THREE.Vector2(1, 1), 0.42, 0.35, 0.85);
+      composer.addPass(bloomPass);
+      composer.addPass(new OutputPass());
 
       applyFit();
       window.addEventListener('resize', applyFit);
+    }
+
+    // ---- Ambient drifting particles (atmosphere) ------------------------
+    let points = null, pVel = null;
+    function initParticles() {
+      const N = 140;
+      const pos = new Float32Array(N * 3);
+      pVel = new Float32Array(N);
+      for (let i = 0; i < N; i++) {
+        pos[i * 3]     = (Math.random() * 2 - 1) * 2.4;
+        pos[i * 3 + 1] = Math.random() * 2.4 - 1.2;
+        pos[i * 3 + 2] = 0.2 + Math.random() * 0.5;
+        pVel[i] = 0.0005 + Math.random() * 0.0013;
+      }
+      const geo = new THREE.BufferGeometry();
+      geo.setAttribute('position', new THREE.BufferAttribute(pos, 3));
+      const mat = new THREE.PointsMaterial({
+        color: 0xbfe6f0, size: 4, sizeAttenuation: false,
+        transparent: true, opacity: 0.45, depthTest: false, blending: THREE.AdditiveBlending
+      });
+      points = new THREE.Points(geo, mat);
+      points.renderOrder = 2;
+      scene.add(points);
+    }
+    function updateParticles() {
+      if (!points) return;
+      const pos = points.geometry.attributes.position.array;
+      for (let i = 0; i < pVel.length; i++) {
+        pos[i * 3 + 1] += pVel[i];
+        pos[i * 3]     += Math.sin((pos[i * 3 + 1] + i) * 1.3) * 0.0003;
+        if (pos[i * 3 + 1] > 1.25) { pos[i * 3 + 1] = -1.25; pos[i * 3] = (Math.random() * 2 - 1) * 2.4; }
+      }
+      points.geometry.attributes.position.needsUpdate = true;
     }
 
     // Fit the active scene: "contain" (whole can + gradient sides) or "cover" (full-bleed)
@@ -677,6 +723,7 @@
         ? Math.max(boxW / curScene.w, boxH / curScene.h)
         : Math.min(boxW / curScene.w, boxH / curScene.h);
       mesh.scale.set(curScene.w * scale, curScene.h * scale, 1);
+      if (composer) composer.setSize(w, h);
     }
 
     // Piecewise scroll → frame across the scenes defined by BOUNDS
@@ -796,7 +843,9 @@
         shownFrame = show;
       }
       updateOverlay(currentProgress);
-      renderer.render(scene, camera);
+      updateParticles();
+      if (curScene.fit === 'cover') { composer.render(); }
+      else { renderer.setRenderTarget(null); renderer.render(scene, camera); }
       requestAnimationFrame(tick);
     }
 
