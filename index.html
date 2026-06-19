@@ -3,19 +3,37 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+<meta http-equiv="Pragma" content="no-cache" />
+<meta http-equiv="Expires" content="0" />
+<link rel="icon" href="data:," />
 <title>VORTEX — Scroll to open</title>
 <style>
   @font-face {
-    font-family: 'Inter';
-    src: url('fonts/inter-variable.woff2') format('woff2');
-    font-weight: 100 900;
+    font-family: 'Bebas Neue';
+    src: url('fonts/bebas-neue-400.woff2') format('woff2');
+    font-weight: 400;
     font-style: normal;
     font-display: swap;
   }
   @font-face {
-    font-family: 'Oswald';
-    src: url('fonts/oswald-variable.woff2') format('woff2');
-    font-weight: 200 700;
+    font-family: 'Space Grotesk';
+    src: url('fonts/space-grotesk-variable.woff2') format('woff2');
+    font-weight: 300 700;
+    font-style: normal;
+    font-display: swap;
+  }
+  @font-face {
+    font-family: 'Space Mono';
+    src: url('fonts/space-mono-400.woff2') format('woff2');
+    font-weight: 400;
+    font-style: normal;
+    font-display: swap;
+  }
+  @font-face {
+    font-family: 'Space Mono';
+    src: url('fonts/space-mono-700.woff2') format('woff2');
+    font-weight: 700;
     font-style: normal;
     font-display: swap;
   }
@@ -33,8 +51,7 @@
   html { scroll-behavior: auto; }
 
   body {
-    font-family: 'Inter', "Helvetica Neue", Arial, sans-serif;
-    font-feature-settings: "ss01", "cv11", "cv05";
+    font-family: 'Space Grotesk', "Helvetica Neue", Arial, sans-serif;
     color: var(--ink);
     /* Clean gradient background that blends with the studio frames */
     background:
@@ -45,7 +62,7 @@
   }
 
   /* Tall spacer that creates the scroll distance driving the animation */
-  #scroll-track { height: 1000vh; }
+  #scroll-track { height: 1800vh; }
 
   /* The WebGL canvas is pinned to the viewport behind the text */
   #scene {
@@ -90,9 +107,10 @@
     display: inline-flex;
     align-items: center;
     gap: 0.75rem;
+    font-family: 'Space Mono', ui-monospace, monospace;
     font-size: 0.72rem;
-    font-weight: 600;
-    letter-spacing: 0.34em;
+    font-weight: 700;
+    letter-spacing: 0.2em;
     text-transform: uppercase;
     color: var(--accent);
     margin-bottom: 1.35rem;
@@ -104,11 +122,11 @@
     box-shadow: 0 0 10px rgba(79,195,214,0.8);
   }
   .hero h1 {
-    font-family: 'Oswald', 'Inter', sans-serif;
-    font-size: clamp(3.8rem, 11vw, 8.5rem);
-    font-weight: 700;
-    letter-spacing: 0.04em;
-    line-height: 0.86;
+    font-family: 'Bebas Neue', 'Space Grotesk', sans-serif;
+    font-size: clamp(4.4rem, 12.5vw, 9.5rem);
+    font-weight: 400;
+    letter-spacing: 0.03em;
+    line-height: 0.9;
     text-transform: uppercase;
     text-shadow: 0 8px 50px rgba(0,0,0,0.6);
   }
@@ -152,9 +170,10 @@
     bottom: 5vh;
     left: 0; right: 0;
     text-align: center;
-    font-size: 0.7rem;
-    letter-spacing: 0.5em;
-    text-indent: 0.5em;
+    font-family: 'Space Mono', ui-monospace, monospace;
+    font-size: 0.68rem;
+    letter-spacing: 0.32em;
+    text-indent: 0.32em;
     text-transform: uppercase;
     opacity: 0.7;
     will-change: opacity;
@@ -191,21 +210,76 @@
     will-change: opacity, transform;
   }
   .closing h2 {
-    font-family: 'Oswald', 'Inter', sans-serif;
-    font-size: clamp(2.4rem, 8vw, 5.5rem);
-    font-weight: 700;
-    letter-spacing: 0.05em;
+    font-family: 'Bebas Neue', 'Space Grotesk', sans-serif;
+    font-size: clamp(2.8rem, 9vw, 6.5rem);
+    font-weight: 400;
+    letter-spacing: 0.04em;
     text-transform: uppercase;
     text-shadow: 0 6px 40px rgba(0,0,0,0.5);
   }
   .closing span {
     display: block;
     margin-top: 0.8rem;
-    font-size: 0.7rem;
-    letter-spacing: 0.45em;
-    text-indent: 0.45em;
+    font-family: 'Space Mono', ui-monospace, monospace;
+    font-size: 0.68rem;
+    letter-spacing: 0.28em;
+    text-indent: 0.28em;
     text-transform: uppercase;
     opacity: 0.7;
+  }
+
+  /* Ocean scene: cinematic scrims that mask the clip's baked-in text (top)
+     and the Hailuo watermark (bottom); brand text rides the clear middle band */
+  .ocean-fx {
+    position: fixed;
+    inset: 0;
+    z-index: 2;
+    pointer-events: none;
+    opacity: 0;
+    will-change: opacity;
+    background:
+      linear-gradient(to bottom, rgba(2,5,9,1) 0%, rgba(2,5,9,1) 20%, rgba(2,5,9,0) 36%),
+      linear-gradient(to top, rgba(2,5,9,1) 0%, rgba(2,5,9,1) 7%, rgba(2,5,9,0.5) 12%, rgba(2,5,9,0) 22%);
+  }
+
+  /* Quick dip-to-black bridging the can and ocean scenes */
+  .transition {
+    position: fixed;
+    inset: 0;
+    z-index: 4;
+    pointer-events: none;
+    background: #02060b;
+    opacity: 0;
+    will-change: opacity;
+  }
+
+  .ocean-climax {
+    position: absolute;
+    top: 50%;
+    left: 0; right: 0;
+    text-align: center;
+    opacity: 0;
+    transform: translateY(-50%);
+    will-change: opacity, transform;
+  }
+  .ocean-climax h2 {
+    font-family: 'Bebas Neue', 'Space Grotesk', sans-serif;
+    font-size: clamp(2.8rem, 9vw, 6.5rem);
+    font-weight: 400;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    text-shadow: 0 6px 44px rgba(0,0,0,0.7);
+  }
+  .ocean-climax span {
+    display: block;
+    margin-top: 0.9rem;
+    font-family: 'Space Mono', ui-monospace, monospace;
+    font-size: 0.7rem;
+    font-weight: 700;
+    letter-spacing: 0.24em;
+    text-indent: 0.24em;
+    text-transform: uppercase;
+    color: var(--accent);
   }
 
   /* Loading screen */
@@ -222,10 +296,11 @@
     transition: opacity 0.8s ease;
   }
   #loader .mark {
-    font-size: clamp(2rem, 8vw, 3.6rem);
-    font-weight: 800;
-    letter-spacing: 0.3em;
-    text-indent: 0.3em;
+    font-family: 'Bebas Neue', 'Space Grotesk', sans-serif;
+    font-size: clamp(2.6rem, 9vw, 4.2rem);
+    font-weight: 400;
+    letter-spacing: 0.16em;
+    text-indent: 0.16em;
     opacity: 0.9;
   }
   #loader .bar {
@@ -244,9 +319,10 @@
     transition: width 0.15s linear;
   }
   #loader .pct {
-    font-size: 0.7rem;
-    letter-spacing: 0.4em;
-    text-indent: 0.4em;
+    font-family: 'Space Mono', ui-monospace, monospace;
+    font-size: 0.68rem;
+    letter-spacing: 0.25em;
+    text-indent: 0.25em;
     opacity: 0.6;
   }
   #loader.hidden { opacity: 0; pointer-events: none; }
@@ -255,6 +331,7 @@
 <body>
   <canvas id="scene"></canvas>
   <div class="vignette"></div>
+  <div class="ocean-fx" id="ocean-fx"></div>
 
   <div class="overlay">
     <div class="hero" id="hero">
@@ -275,9 +352,22 @@
     </div>
     <div class="closing" id="closing">
       <h2>Crack it open.</h2>
+      <span>16 fl oz · 473 mL</span>
+    </div>
+
+    <div class="reveals" id="ocean-reveals">
+      <p class="rline ocean" data-start="0.05" data-end="0.20">The world is noise.</p>
+      <p class="rline ocean" data-start="0.24" data-end="0.40">Pulling you under.</p>
+      <p class="rline ocean" data-start="0.46" data-end="0.62">Then it clears.</p>
+      <p class="rline ocean" data-start="0.64" data-end="0.80">Focus, out of the chaos.</p>
+    </div>
+    <div class="ocean-climax" id="ocean-climax">
+      <h2>VORTEX is what you need.</h2>
       <span>Zero sugar · 200 mg caffeine</span>
     </div>
   </div>
+
+  <div class="transition" id="transition"></div>
 
   <div id="scroll-track"></div>
 
@@ -294,38 +384,82 @@
   <script type="module">
     import * as THREE from 'three';
 
-    // ---- Config ----------------------------------------------------------
-    const TOTAL_FRAMES = 477;
-    const FRAME_W = 880, FRAME_H = 720;    // tight crop on the can (watermark removed)
-    const framePath = (n) => `frames/frame_${String(n).padStart(4, '0')}.jpg`;
+    // ---- Two scenes on one scroll timeline ------------------------------
+    const CAN   = { count: 477, w: 880,  h: 720, fit: 'contain', path: (n) => `frames/frame_${String(n).padStart(4, '0')}.jpg` };
+    const OCEAN = { count: 142, w: 1024, h: 558, fit: 'cover',    path: (n) => `ocean/ocean_${String(n).padStart(4, '0')}.jpg` };
+    const TOTAL = CAN.count + OCEAN.count;
+    const SPLIT = 0.56;                    // share of the scroll given to the can scene (rest = ocean, scrubbed slow)
     const SMOOTHING = 0.09;                // scroll → frame easing (0..1)
 
-    // ---- Preload all frames ---------------------------------------------
-    const images = new Array(TOTAL_FRAMES);
-    let loaded = 0;
+    // ---- Frame source + sliding-window loader ---------------------------
+    // We never hold all 619 frames decoded at once (that's ~1.5 GB and crashes
+    // the tab). Instead we keep a small window of frames decoded around the
+    // current scroll position, load on demand, and release the rest.
+    const frameSrc = (idx) => idx < CAN.count ? CAN.path(idx + 1) : OCEAN.path(idx - CAN.count + 1);
+    const cache = new Map();       // frameIndex -> loaded HTMLImageElement
+    const pending = new Set();     // frameIndex currently loading
+    const HALF_WINDOW = 48;        // keep ±48 frames decoded (~150 MB peak)
+    const PREFETCH = 28;           // load ±28 frames around where you are
+
     const barEl = document.getElementById('bar');
     const pctEl = document.getElementById('pct');
     const loaderEl = document.getElementById('loader');
 
-    function bumpProgress() {
-      loaded++;
-      const p = Math.round((loaded / TOTAL_FRAMES) * 100);
-      barEl.style.width = p + '%';
-      pctEl.textContent = 'LOADING ' + p + '%';
-      if (loaded === TOTAL_FRAMES) start();
-    }
-
-    for (let i = 0; i < TOTAL_FRAMES; i++) {
+    function requestFrame(idx) {
+      if (idx < 0 || idx >= TOTAL || cache.has(idx) || pending.has(idx)) return;
+      if (pending.size >= 24) return;   // cap in-flight loads so a fast scroll can't queue hundreds
+      pending.add(idx);
       const img = new Image();
       img.decoding = 'async';
-      img.onload = () => { images[i] = img; bumpProgress(); };
-      img.onerror = () => { bumpProgress(); };   // never hang on a missing frame
-      img.src = framePath(i + 1);
+      img.onload = () => { pending.delete(idx); cache.set(idx, img); };
+      img.onerror = () => { pending.delete(idx); };
+      img.src = frameSrc(idx);
+    }
+
+    function prefetchAround(center) {
+      for (let d = 0; d <= PREFETCH; d++) { requestFrame(center + d); if (d) requestFrame(center - d); }
+    }
+
+    function evictOutside(center) {
+      // Drop references to far frames; the browser reclaims their decoded data.
+      // (We don't null .src — that could blank the frame currently on screen.)
+      for (const idx of cache.keys()) {
+        if (idx < center - HALF_WINDOW || idx > center + HALF_WINDOW) cache.delete(idx);
+      }
+    }
+
+    // Nearest already-decoded frame, so a fast scroll shows the closest frame
+    // instead of going blank while the exact one streams in.
+    function nearestLoaded(idx) {
+      if (cache.has(idx)) return idx;
+      for (let d = 1; d <= HALF_WINDOW + PREFETCH; d++) {
+        if (cache.has(idx - d)) return idx - d;
+        if (cache.has(idx + d)) return idx + d;
+      }
+      return shownFrame;
+    }
+
+    // Load a small opening batch, then start as soon as it's ready.
+    const INITIAL = 30;
+    let initialLoaded = 0, started = false;
+    for (let i = 0; i < INITIAL; i++) {
+      const img = new Image();
+      img.decoding = 'async';
+      const done = () => {
+        initialLoaded++;
+        const p = Math.round((initialLoaded / INITIAL) * 100);
+        barEl.style.width = p + '%';
+        pctEl.textContent = 'LOADING ' + Math.min(p, 100) + '%';
+        if (!started && initialLoaded >= INITIAL) { started = true; start(); }
+      };
+      img.onload = () => { cache.set(i, img); done(); };
+      img.onerror = done;
+      img.src = frameSrc(i);
     }
 
     // ---- Three.js scene --------------------------------------------------
-    let renderer, scene, camera, mesh, texture;
-    let currentProgress = 0, targetProgress = 0, shownFrame = -1;
+    let renderer, scene, camera, mesh, canTex, oceanTex;
+    let currentProgress = 0, targetProgress = 0, shownFrame = -1, curSpec = CAN, lastCenter = -999;
 
     function initScene() {
       const canvas = document.getElementById('scene');
@@ -337,25 +471,33 @@
       camera = new THREE.OrthographicCamera(-1, 1, 1, -1, 0, 10);
       camera.position.z = 1;
 
-      texture = new THREE.Texture(images[0]);
-      texture.colorSpace = THREE.SRGBColorSpace;
-      texture.minFilter = THREE.LinearFilter;
-      texture.magFilter = THREE.LinearFilter;
-      texture.generateMipmaps = false;
-      texture.needsUpdate = true;
+      // Separate textures per scene — the can (880×720) and ocean (1024×558)
+      // frames differ in size, and reusing one texture across sizes makes WebGL
+      // fail the sub-image upload (GL_INVALID_VALUE) so the ocean never shows.
+      const makeTex = (img) => {
+        const t = new THREE.Texture(img);
+        t.colorSpace = THREE.SRGBColorSpace;
+        t.minFilter = THREE.LinearFilter;
+        t.magFilter = THREE.LinearFilter;
+        t.generateMipmaps = false;
+        return t;
+      };
+      canTex = makeTex(cache.get(0));
+      canTex.needsUpdate = true;
+      oceanTex = makeTex(null);    // allocated on the first ocean frame
 
       mesh = new THREE.Mesh(
         new THREE.PlaneGeometry(1, 1),
-        new THREE.MeshBasicMaterial({ map: texture })
+        new THREE.MeshBasicMaterial({ map: canTex })
       );
       scene.add(mesh);
 
-      resize();
-      window.addEventListener('resize', resize);
+      applyFit();
+      window.addEventListener('resize', applyFit);
     }
 
-    // "contain" fit: keep the whole can visible; dark gradient frames the sides
-    function resize() {
+    // Fit the active scene: "contain" (whole can + gradient sides) or "cover" (full-bleed ocean)
+    function applyFit() {
       const w = window.innerWidth, h = window.innerHeight;
       renderer.setSize(w, h);
       const aspect = w / h;
@@ -364,8 +506,20 @@
       camera.updateProjectionMatrix();
 
       const boxW = 2 * aspect, boxH = 2;
-      const scale = Math.min(boxW / FRAME_W, boxH / FRAME_H);
-      mesh.scale.set(FRAME_W * scale, FRAME_H * scale, 1);
+      const scale = curSpec.fit === 'cover'
+        ? Math.max(boxW / curSpec.w, boxH / curSpec.h)
+        : Math.min(boxW / curSpec.w, boxH / curSpec.h);
+      mesh.scale.set(curSpec.w * scale, curSpec.h * scale, 1);
+    }
+
+    // Piecewise scroll → frame: can scene in [0, SPLIT), ocean scene in [SPLIT, 1]
+    function progressToFrame(p) {
+      if (p < SPLIT) {
+        const t = SPLIT > 0 ? p / SPLIT : 0;
+        return Math.round(t * (CAN.count - 1));
+      }
+      const t = (p - SPLIT) / (1 - SPLIT);
+      return CAN.count + Math.round(t * (OCEAN.count - 1));
     }
 
     // ---- Scroll → progress ----------------------------------------------
@@ -379,7 +533,11 @@
     const heroEl = document.getElementById('hero');
     const cueEl = document.getElementById('cue');
     const closingEl = document.getElementById('closing');
-    const rlineEls = Array.from(document.querySelectorAll('.rline'));
+    const canRlines = Array.from(document.querySelectorAll('.rline:not(.ocean)'));
+    const oceanRlines = Array.from(document.querySelectorAll('.rline.ocean'));
+    const oceanClimaxEl = document.getElementById('ocean-climax');
+    const oceanFxEl = document.getElementById('ocean-fx');
+    const transitionEl = document.getElementById('transition');
     const clamp01 = (x) => Math.min(Math.max(x, 0), 1);
     const easeOutCubic = (t) => 1 - Math.pow(1 - t, 3);
 
@@ -394,26 +552,43 @@
       return { o: 1, dy: 0 };
     }
 
+    function applyReveal(el, p) {
+      const r = revealLine(p, +el.dataset.start, +el.dataset.end);
+      el.style.opacity = r.o.toFixed(3);
+      el.style.transform = `translateY(calc(-50% + ${r.dy.toFixed(1)}px))`;
+    }
+
     function updateOverlay(p) {
-      // Brand hero fades out over the first 14% of scroll, drifting upward
-      const heroOut = clamp01(p / 0.14);
+      const pc = SPLIT > 0 ? p / SPLIT : 1;          // can-scene local progress
+      const po = (p - SPLIT) / (1 - SPLIT);          // ocean-scene local progress
+
+      // Brand hero fades out over the first 14% of the can scene
+      const heroOut = clamp01(pc / 0.14);
       heroEl.style.opacity = (1 - heroOut).toFixed(3);
       heroEl.style.transform = `translateY(calc(-50% - ${(40 * heroOut).toFixed(1)}px))`;
 
       // Scroll cue disappears almost immediately
-      cueEl.style.opacity = clamp01(1 - p / 0.05).toFixed(3);
+      cueEl.style.opacity = clamp01(1 - pc / 0.05).toFixed(3);
 
-      // Message lines reveal one at a time while the can spins
-      for (const el of rlineEls) {
-        const r = revealLine(p, +el.dataset.start, +el.dataset.end);
-        el.style.opacity = r.o.toFixed(3);
-        el.style.transform = `translateY(calc(-50% + ${r.dy.toFixed(1)}px))`;
-      }
+      // Can-scene message lines reveal one at a time while the can spins
+      for (const el of canRlines) applyReveal(el, pc);
 
-      // Closing statement bursts in as the lid pops and the water peaks (last ~14%)
-      const inAmt = clamp01((p - 0.86) / 0.10);
-      closingEl.style.opacity = inAmt.toFixed(3);
-      closingEl.style.transform = `translateY(${(24 * (1 - inAmt)).toFixed(1)}px)`;
+      // Can-scene closing statement bursts in as the lid pops (last ~14% of the scene)
+      const closeIn = pc <= 1 ? clamp01((pc - 0.86) / 0.10) : 0;
+      closingEl.style.opacity = closeIn.toFixed(3);
+      closingEl.style.transform = `translateY(${(24 * (1 - closeIn)).toFixed(1)}px)`;
+
+      // Ocean scrims (mask the clip's baked-in text + watermark) fade in at the boundary
+      oceanFxEl.style.opacity = clamp01((p - (SPLIT - 0.03)) / 0.05).toFixed(3);
+
+      // Ocean-scene message lines + corrected climax line
+      for (const el of oceanRlines) applyReveal(el, po);
+      const ocIn = clamp01((po - 0.82) / 0.12);
+      oceanClimaxEl.style.opacity = ocIn.toFixed(3);
+      oceanClimaxEl.style.transform = `translateY(calc(-50% + ${(24 * (1 - ocIn)).toFixed(1)}px))`;
+
+      // Quick dip-to-black bridging the two scenes
+      transitionEl.style.opacity = clamp01(1 - Math.abs(p - SPLIT) / 0.02).toFixed(3);
     }
 
     // ---- Render loop -----------------------------------------------------
@@ -421,11 +596,19 @@
       currentProgress += (targetProgress - currentProgress) * SMOOTHING;
       if (Math.abs(targetProgress - currentProgress) < 0.0002) currentProgress = targetProgress;
 
-      const frame = Math.round(currentProgress * (TOTAL_FRAMES - 1));
-      if (frame !== shownFrame && images[frame]) {
-        texture.image = images[frame];
-        texture.needsUpdate = true;
-        shownFrame = frame;
+      const frame = progressToFrame(currentProgress);
+      if (frame !== lastCenter) { prefetchAround(frame); lastCenter = frame; }
+      evictOutside(frame);               // every tick, so a fast sweep can't balloon the cache
+      const show = nearestLoaded(frame);
+      if (show >= 0 && show !== shownFrame && cache.has(show)) {
+        const isOcean = show >= CAN.count;
+        const tex = isOcean ? oceanTex : canTex;
+        tex.image = cache.get(show);
+        tex.needsUpdate = true;
+        if (mesh.material.map !== tex) { mesh.material.map = tex; mesh.material.needsUpdate = true; }
+        shownFrame = show;
+        const spec = isOcean ? OCEAN : CAN;
+        if (spec !== curSpec) { curSpec = spec; applyFit(); }
       }
       updateOverlay(currentProgress);
       renderer.render(scene, camera);
