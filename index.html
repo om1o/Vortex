@@ -282,6 +282,102 @@
     color: var(--accent);
   }
 
+  /* ---- Page sections that scroll up over the final ocean frame ---- */
+  .about, .shop {
+    position: relative;
+    z-index: 5;
+    padding: 16vh 6vw;
+    display: flex;
+    justify-content: center;
+  }
+  .about { background: linear-gradient(180deg, #02060b 0%, #070e16 100%); }
+  .shop  { background: linear-gradient(180deg, #070e16 0%, #0a141e 45%, #04080d 100%); min-height: 100vh; }
+  .about-inner, .shop-inner { width: 100%; max-width: 1080px; text-align: center; }
+
+  .eyebrow {
+    display: inline-flex; align-items: center; gap: 0.7rem;
+    font-family: 'Space Mono', ui-monospace, monospace;
+    font-size: 0.7rem; font-weight: 700; letter-spacing: 0.2em;
+    text-transform: uppercase; color: var(--accent);
+  }
+  .eyebrow i { width: 30px; height: 2px; background: var(--accent); box-shadow: 0 0 10px var(--accent); }
+
+  .about h2, .shop h2 {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(2.8rem, 7.5vw, 5.4rem);
+    font-weight: 400; letter-spacing: 0.03em; line-height: 0.95;
+    text-transform: uppercase; margin: 1rem 0 0;
+  }
+  .about .lead {
+    max-width: 40rem; margin: 1.6rem auto 8vh;
+    font-size: clamp(1rem, 2vw, 1.25rem); line-height: 1.6; opacity: 0.75;
+  }
+  .benefits { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2.4rem; }
+  .benefit svg {
+    width: 46px; height: 46px; stroke: var(--accent); stroke-width: 2;
+    fill: none; stroke-linecap: round; stroke-linejoin: round;
+    filter: drop-shadow(0 0 10px rgba(79,195,214,0.5));
+  }
+  .benefit h3 {
+    font-family: 'Bebas Neue', sans-serif; font-size: 1.7rem;
+    letter-spacing: 0.05em; text-transform: uppercase; margin: 1.1rem 0 0.5rem;
+  }
+  .benefit p { font-size: 0.95rem; line-height: 1.55; opacity: 0.68; }
+
+  .shop h2 { margin-bottom: 6vh; }
+  .flavors { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.6rem; }
+  .flavor {
+    --fc: var(--accent);
+    border: 1px solid rgba(238,244,248,0.08);
+    border-radius: 18px;
+    padding: 2.6rem 1.4rem 2rem;
+    background: linear-gradient(180deg, rgba(238,244,248,0.045), rgba(238,244,248,0.01));
+    transition: transform .4s ease, border-color .4s ease, box-shadow .4s ease;
+  }
+  .flavor:hover {
+    transform: translateY(-8px);
+    border-color: color-mix(in srgb, var(--fc) 60%, transparent);
+    box-shadow: 0 24px 60px rgba(0,0,0,0.55), 0 0 50px -14px var(--fc);
+  }
+  .flavor .can {
+    width: 84px; height: 196px; margin: 0 auto 1.6rem;
+    border-radius: 13px / 16px;
+    background: radial-gradient(120% 70% at 50% 62%, var(--fc) 0%, #0c131b 72%);
+    box-shadow: inset 0 0 28px rgba(0,0,0,0.55), inset 7px 0 14px rgba(255,255,255,0.12);
+    display: flex; align-items: center; justify-content: center;
+  }
+  .flavor .can span {
+    writing-mode: vertical-rl; transform: rotate(180deg);
+    font-family: 'Bebas Neue', sans-serif; font-size: 1.5rem;
+    letter-spacing: 0.12em; color: rgba(255,255,255,0.94);
+  }
+  .flavor h3 {
+    font-family: 'Bebas Neue', sans-serif; font-size: 2rem;
+    letter-spacing: 0.04em; text-transform: uppercase; color: var(--fc);
+  }
+  .flavor p { margin: 0.5rem 0 1.1rem; font-size: 0.9rem; line-height: 1.5; opacity: 0.7; }
+  .flavor .spec {
+    font-family: 'Space Mono', ui-monospace, monospace;
+    font-size: 0.6rem; letter-spacing: 0.14em; text-transform: uppercase; opacity: 0.55;
+  }
+  .cta {
+    display: inline-block; margin-top: 7vh;
+    padding: 1.15rem 3.2rem; border-radius: 100px;
+    font-family: 'Space Mono', ui-monospace, monospace;
+    font-weight: 700; letter-spacing: 0.18em; text-transform: uppercase; font-size: 0.82rem;
+    color: #03070c; background: var(--accent);
+    box-shadow: 0 0 34px -6px var(--accent);
+    text-decoration: none; transition: transform .3s ease, box-shadow .3s ease;
+  }
+  .cta:hover { transform: translateY(-3px) scale(1.03); box-shadow: 0 0 56px 0 var(--accent); }
+  .shop .legal {
+    margin-top: 5vh; font-family: 'Space Mono', ui-monospace, monospace;
+    font-size: 0.6rem; letter-spacing: 0.2em; text-transform: uppercase; opacity: 0.38;
+  }
+  @media (max-width: 760px) {
+    .benefits, .flavors { grid-template-columns: 1fr; max-width: 360px; margin-left: auto; margin-right: auto; }
+  }
+
   /* Loading screen */
   #loader {
     position: fixed;
@@ -370,6 +466,62 @@
   <div class="transition" id="transition"></div>
 
   <div id="scroll-track"></div>
+
+  <section class="about">
+    <div class="about-inner">
+      <span class="eyebrow"><i></i>What it does</span>
+      <h2>Pulls you into focus.</h2>
+      <p class="lead">VORTEX is built for the moments that demand everything. It pulls scattered
+      attention into one clear current — sharp, sustained energy that lifts you up and never
+      drops you.</p>
+      <div class="benefits">
+        <div class="benefit">
+          <svg viewBox="0 0 48 48"><circle cx="24" cy="24" r="17"/><circle cx="24" cy="24" r="8"/></svg>
+          <h3>Razor focus</h3>
+          <p>200 mg of caffeine, tuned for clean, locked-in attention when it counts.</p>
+        </div>
+        <div class="benefit">
+          <svg viewBox="0 0 48 48"><polyline points="6 36 17 19 27 16 42 15"/></svg>
+          <h3>No crash</h3>
+          <p>A smooth climb and an even smoother landing. Energy without the drop-off.</p>
+        </div>
+        <div class="benefit">
+          <svg viewBox="0 0 48 48"><circle cx="24" cy="24" r="16"/><line x1="13" y1="13" x2="35" y2="35"/></svg>
+          <h3>Zero sugar</h3>
+          <p>All the drive, none of the sugar load. Just clarity, on demand.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="shop">
+    <div class="shop-inner">
+      <span class="eyebrow"><i></i>Pick your vortex</span>
+      <h2>Three ways to focus.</h2>
+      <div class="flavors">
+        <article class="flavor" style="--fc:#4fc3d6">
+          <div class="can"><span>VORTEX</span></div>
+          <h3>Tidal</h3>
+          <p>The original ocean swirl. Crisp, clean, electric.</p>
+          <span class="spec">Zero sugar · 200 mg caffeine</span>
+        </article>
+        <article class="flavor" style="--fc:#e0457b">
+          <div class="can"><span>VORTEX</span></div>
+          <h3>Riptide</h3>
+          <p>Dark berry undertow with a sharp citrus pull.</p>
+          <span class="spec">Zero sugar · 200 mg caffeine</span>
+        </article>
+        <article class="flavor" style="--fc:#9be15d">
+          <div class="can"><span>VORTEX</span></div>
+          <h3>Surge</h3>
+          <p>Bright lime charge for the second-wind days.</p>
+          <span class="spec">Zero sugar · 200 mg caffeine</span>
+        </article>
+      </div>
+      <a class="cta" href="#">Pre-order now</a>
+      <p class="legal">16 fl oz (473 mL) · Crafted for focus · © VORTEX</p>
+    </div>
+  </section>
 
   <div id="loader">
     <div class="mark">VORTEX</div>
@@ -522,10 +674,11 @@
       return CAN.count + Math.round(t * (OCEAN.count - 1));
     }
 
-    // ---- Scroll → progress ----------------------------------------------
+    // ---- Scroll → progress (mapped to the cinematic track only) ---------
+    const trackEl = document.getElementById('scroll-track');
     function updateTarget() {
-      const max = document.documentElement.scrollHeight - window.innerHeight;
-      targetProgress = max > 0 ? Math.min(Math.max(window.scrollY / max, 0), 1) : 0;
+      const span = trackEl.offsetHeight - window.innerHeight;   // shop section scroll is excluded
+      targetProgress = span > 0 ? Math.min(Math.max(window.scrollY / span, 0), 1) : 0;
     }
     window.addEventListener('scroll', updateTarget, { passive: true });
 
