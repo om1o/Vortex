@@ -62,7 +62,7 @@
   }
 
   /* Tall spacer that creates the scroll distance driving the animation */
-  #scroll-track { height: 1800vh; }
+  #scroll-track { height: 2200vh; }
 
   /* The WebGL canvas is pinned to the viewport behind the text */
   #scene {
@@ -252,6 +252,12 @@
     opacity: 0;
     will-change: opacity;
   }
+
+  /* Thin scroll-progress rail on the right */
+  .progress { position: fixed; right: 20px; top: 50%; transform: translateY(-50%); z-index: 6; pointer-events: none; }
+  .ptrack { width: 2px; height: 40vh; background: rgba(238,244,248,0.13); border-radius: 2px; overflow: hidden; }
+  .pfill { width: 100%; height: 0%; background: var(--accent); box-shadow: 0 0 10px var(--accent); transition: height 0.12s linear; }
+  @media (max-width: 760px) { .progress { display: none; } }
 
   .ocean-climax {
     position: absolute;
@@ -464,9 +470,19 @@
       <h2>VORTEX is what you need.</h2>
       <span>Zero sugar · 200 mg caffeine</span>
     </div>
+
+    <div class="reveals" id="man-reveals">
+      <p class="rline man" data-start="0.10" data-end="0.32">Quiet the noise.</p>
+      <p class="rline man" data-start="0.38" data-end="0.62">Lock into the moment.</p>
+    </div>
+    <div class="ocean-climax" id="man-climax">
+      <h2>Welcome to the zone.</h2>
+      <span>Zero sugar · 200 mg caffeine</span>
+    </div>
   </div>
 
   <div class="transition" id="transition"></div>
+  <div class="progress" aria-hidden="true"><div class="ptrack"><div class="pfill" id="pfill"></div></div></div>
 
   <div id="scroll-track"></div>
 
@@ -533,18 +549,22 @@
   <script type="module">
     import * as THREE from 'three';
 
-    // ---- Two scenes on one scroll timeline ------------------------------
+    // ---- Scenes on one scroll timeline (can → ocean → man) --------------
     const CAN   = { count: 477, w: 880,  h: 720, fit: 'contain', path: (n) => `frames/frame_${String(n).padStart(4, '0')}.jpg` };
     const OCEAN = { count: 142, w: 1024, h: 558, fit: 'cover',    path: (n) => `ocean/ocean_${String(n).padStart(4, '0')}.jpg` };
-    const TOTAL = CAN.count + OCEAN.count;
-    const SPLIT = 0.56;                    // share of the scroll given to the can scene (rest = ocean, scrubbed slow)
+    const MAN   = { count: 128, w: 1024, h: 652, fit: 'cover',    path: (n) => `man/man_${String(n).padStart(4, '0')}.jpg` };
+    const SCENES = [CAN, OCEAN, MAN];
+    const BOUNDS = [0, 0.42, 0.72, 1];     // SCENES[i] spans progress [BOUNDS[i], BOUNDS[i+1]]
+    let _off = 0; for (const s of SCENES) { s.offset = _off; _off += s.count; }
+    const TOTAL = _off;
     const SMOOTHING = 0.09;                // scroll → frame easing (0..1)
 
     // ---- Frame source + sliding-window loader ---------------------------
     // We never hold all 619 frames decoded at once (that's ~1.5 GB and crashes
     // the tab). Instead we keep a small window of frames decoded around the
     // current scroll position, load on demand, and release the rest.
-    const frameSrc = (idx) => idx < CAN.count ? CAN.path(idx + 1) : OCEAN.path(idx - CAN.count + 1);
+    const sceneOf = (frame) => { for (let i = SCENES.length - 1; i >= 0; i--) if (frame >= SCENES[i].offset) return SCENES[i]; return SCENES[0]; };
+    const frameSrc = (idx) => { const s = sceneOf(idx); return s.path(idx - s.offset + 1); };
     const cache = new Map();       // frameIndex -> loaded HTMLImageElement
     const pending = new Set();     // frameIndex currently loading
     const HALF_WINDOW = 48;        // keep ±48 frames decoded (~150 MB peak)
@@ -607,8 +627,8 @@
     }
 
     // ---- Three.js scene --------------------------------------------------
-    let renderer, scene, camera, mesh, canTex, oceanTex;
-    let currentProgress = 0, targetProgress = 0, shownFrame = -1, curSpec = CAN, lastCenter = -999;
+    let renderer, scene, camera, mesh;
+    let currentProgress = 0, targetProgress = 0, shownFrame = -1, curScene = CAN, lastCenter = -999;
 
     function initScene() {
       const canvas = document.getElementById('scene');
@@ -620,9 +640,8 @@
       camera = new THREE.OrthographicCamera(-1, 1, 1, -1, 0, 10);
       camera.position.z = 1;
 
-      // Separate textures per scene — the can (880×720) and ocean (1024×558)
-      // frames differ in size, and reusing one texture across sizes makes WebGL
-      // fail the sub-image upload (GL_INVALID_VALUE) so the ocean never shows.
+      // One texture per scene — frame sizes differ between scenes, and reusing a
+      // single texture across sizes makes WebGL fail the upload (GL_INVALID_VALUE).
       const makeTex = (img) => {
         const t = new THREE.Texture(img);
         t.colorSpace = THREE.SRGBColorSpace;
@@ -631,13 +650,12 @@
         t.generateMipmaps = false;
         return t;
       };
-      canTex = makeTex(cache.get(0));
-      canTex.needsUpdate = true;
-      oceanTex = makeTex(null);    // allocated on the first ocean frame
+      SCENES.forEach((s, i) => { s.tex = makeTex(i === 0 ? cache.get(0) : null); });
+      SCENES[0].tex.needsUpdate = true;
 
       mesh = new THREE.Mesh(
         new THREE.PlaneGeometry(1, 1),
-        new THREE.MeshBasicMaterial({ map: canTex })
+        new THREE.MeshBasicMaterial({ map: SCENES[0].tex })
       );
       scene.add(mesh);
 
@@ -645,7 +663,7 @@
       window.addEventListener('resize', applyFit);
     }
 
-    // Fit the active scene: "contain" (whole can + gradient sides) or "cover" (full-bleed ocean)
+    // Fit the active scene: "contain" (whole can + gradient sides) or "cover" (full-bleed)
     function applyFit() {
       const w = window.innerWidth, h = window.innerHeight;
       renderer.setSize(w, h);
@@ -655,20 +673,22 @@
       camera.updateProjectionMatrix();
 
       const boxW = 2 * aspect, boxH = 2;
-      const scale = curSpec.fit === 'cover'
-        ? Math.max(boxW / curSpec.w, boxH / curSpec.h)
-        : Math.min(boxW / curSpec.w, boxH / curSpec.h);
-      mesh.scale.set(curSpec.w * scale, curSpec.h * scale, 1);
+      const scale = curScene.fit === 'cover'
+        ? Math.max(boxW / curScene.w, boxH / curScene.h)
+        : Math.min(boxW / curScene.w, boxH / curScene.h);
+      mesh.scale.set(curScene.w * scale, curScene.h * scale, 1);
     }
 
-    // Piecewise scroll → frame: can scene in [0, SPLIT), ocean scene in [SPLIT, 1]
+    // Piecewise scroll → frame across the scenes defined by BOUNDS
     function progressToFrame(p) {
-      if (p < SPLIT) {
-        const t = SPLIT > 0 ? p / SPLIT : 0;
-        return Math.round(t * (CAN.count - 1));
+      for (let i = 0; i < SCENES.length; i++) {
+        const a = BOUNDS[i], b = BOUNDS[i + 1];
+        if (p < b || i === SCENES.length - 1) {
+          const t = b > a ? Math.min(Math.max((p - a) / (b - a), 0), 1) : 0;
+          return SCENES[i].offset + Math.round(t * (SCENES[i].count - 1));
+        }
       }
-      const t = (p - SPLIT) / (1 - SPLIT);
-      return CAN.count + Math.round(t * (OCEAN.count - 1));
+      return TOTAL - 1;
     }
 
     // ---- Scroll → progress (mapped to the cinematic track only) ---------
@@ -679,13 +699,23 @@
     }
     window.addEventListener('scroll', updateTarget, { passive: true });
 
+    const pfill = document.getElementById('pfill');
+    function updateProgressUI() {
+      const max = document.documentElement.scrollHeight - window.innerHeight;
+      pfill.style.height = (max > 0 ? Math.min(Math.max(window.scrollY / max, 0), 1) * 100 : 0).toFixed(1) + '%';
+    }
+    window.addEventListener('scroll', updateProgressUI, { passive: true });
+    updateProgressUI();
+
     // ---- Overlay text reacting to progress ------------------------------
     const heroEl = document.getElementById('hero');
     const cueEl = document.getElementById('cue');
     const closingEl = document.getElementById('closing');
-    const canRlines = Array.from(document.querySelectorAll('.rline:not(.ocean)'));
+    const canRlines = Array.from(document.querySelectorAll('.rline:not(.ocean):not(.man)'));
     const oceanRlines = Array.from(document.querySelectorAll('.rline.ocean'));
+    const manRlines = Array.from(document.querySelectorAll('.rline.man'));
     const oceanClimaxEl = document.getElementById('ocean-climax');
+    const manClimaxEl = document.getElementById('man-climax');
     const oceanFxEl = document.getElementById('ocean-fx');
     const transitionEl = document.getElementById('transition');
     const clamp01 = (x) => Math.min(Math.max(x, 0), 1);
@@ -709,36 +739,43 @@
     }
 
     function updateOverlay(p) {
-      const pc = SPLIT > 0 ? p / SPLIT : 1;          // can-scene local progress
-      const po = (p - SPLIT) / (1 - SPLIT);          // ocean-scene local progress
+      const pc = (p - BOUNDS[0]) / (BOUNDS[1] - BOUNDS[0]);   // can-scene local progress
+      const po = (p - BOUNDS[1]) / (BOUNDS[2] - BOUNDS[1]);   // ocean-scene local progress
+      const pm = (p - BOUNDS[2]) / (BOUNDS[3] - BOUNDS[2]);   // man-scene local progress
 
       // Brand hero fades out over the first 14% of the can scene
       const heroOut = clamp01(pc / 0.14);
       heroEl.style.opacity = (1 - heroOut).toFixed(3);
       heroEl.style.transform = `translateY(calc(-50% - ${(40 * heroOut).toFixed(1)}px))`;
-
-      // Scroll cue disappears almost immediately
       cueEl.style.opacity = clamp01(1 - pc / 0.05).toFixed(3);
 
-      // Can-scene message lines reveal one at a time while the can spins
+      // Can-scene message lines + closing statement (gated to the can scene)
       for (const el of canRlines) applyReveal(el, pc);
-
-      // Can-scene closing statement bursts in as the lid pops (last ~14% of the scene)
-      const closeIn = pc <= 1 ? clamp01((pc - 0.86) / 0.10) : 0;
+      const closeIn = (pc >= 0 && pc <= 1) ? clamp01((pc - 0.86) / 0.10) : 0;
       closingEl.style.opacity = closeIn.toFixed(3);
       closingEl.style.transform = `translateY(${(24 * (1 - closeIn)).toFixed(1)}px)`;
 
-      // Ocean scrims (mask the clip's baked-in text + watermark) fade in at the boundary
-      oceanFxEl.style.opacity = clamp01((p - (SPLIT - 0.03)) / 0.05).toFixed(3);
+      // Ocean scrims fade in at can→ocean and back out at ocean→man
+      const oceanFxOn = Math.min(clamp01((p - (BOUNDS[1] - 0.03)) / 0.05), clamp01((BOUNDS[2] + 0.02 - p) / 0.05));
+      oceanFxEl.style.opacity = oceanFxOn.toFixed(3);
 
-      // Ocean-scene message lines + corrected climax line
+      // Ocean-scene lines + climax (gated so it doesn't linger into the man scene)
       for (const el of oceanRlines) applyReveal(el, po);
-      const ocIn = clamp01((po - 0.82) / 0.12);
+      const ocIn = (po <= 1) ? clamp01((po - 0.82) / 0.12) : 0;
       oceanClimaxEl.style.opacity = ocIn.toFixed(3);
       oceanClimaxEl.style.transform = `translateY(calc(-50% + ${(24 * (1 - ocIn)).toFixed(1)}px))`;
 
-      // Quick dip-to-black bridging the two scenes
-      transitionEl.style.opacity = clamp01(1 - Math.abs(p - SPLIT) / 0.02).toFixed(3);
+      // Man-scene lines + climax
+      for (const el of manRlines) applyReveal(el, pm);
+      const mIn = clamp01((pm - 0.78) / 0.14);
+      manClimaxEl.style.opacity = mIn.toFixed(3);
+      manClimaxEl.style.transform = `translateY(calc(-50% + ${(24 * (1 - mIn)).toFixed(1)}px))`;
+
+      // Dip-to-black at each scene boundary
+      transitionEl.style.opacity = Math.max(
+        clamp01(1 - Math.abs(p - BOUNDS[1]) / 0.02),
+        clamp01(1 - Math.abs(p - BOUNDS[2]) / 0.02)
+      ).toFixed(3);
     }
 
     // ---- Render loop -----------------------------------------------------
@@ -751,14 +788,12 @@
       evictOutside(frame);               // every tick, so a fast sweep can't balloon the cache
       const show = nearestLoaded(frame);
       if (show >= 0 && show !== shownFrame && cache.has(show)) {
-        const isOcean = show >= CAN.count;
-        const tex = isOcean ? oceanTex : canTex;
-        tex.image = cache.get(show);
-        tex.needsUpdate = true;
-        if (mesh.material.map !== tex) { mesh.material.map = tex; mesh.material.needsUpdate = true; }
+        const s = sceneOf(show);
+        s.tex.image = cache.get(show);
+        s.tex.needsUpdate = true;
+        if (mesh.material.map !== s.tex) { mesh.material.map = s.tex; mesh.material.needsUpdate = true; }
+        if (s !== curScene) { curScene = s; applyFit(); }
         shownFrame = show;
-        const spec = isOcean ? OCEAN : CAN;
-        if (spec !== curSpec) { curSpec = spec; applyFit(); }
       }
       updateOverlay(currentProgress);
       renderer.render(scene, camera);
