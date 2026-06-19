@@ -164,6 +164,7 @@
     opacity: 0.6;
     font-size: 0.8em;
   }
+  .rline .w { display: inline-block; will-change: opacity, transform; }
 
   .scrollcue {
     position: absolute;
@@ -768,21 +769,44 @@
     const clamp01 = (x) => Math.min(Math.max(x, 0), 1);
     const easeOutCubic = (t) => 1 - Math.pow(1 - t, 3);
 
-    // A line slides up from below, holds, then drifts up and fades — scrubbed by scroll
-    function revealLine(p, start, end) {
-      if (p <= start) return { o: 0, dy: 26 };
-      if (p >= end) return { o: 0, dy: -26 };
-      const t = (p - start) / (end - start);
-      const IN = 0.30, OUT = 0.70;
-      if (t < IN) { const k = easeOutCubic(t / IN); return { o: k, dy: 26 * (1 - k) }; }
-      if (t > OUT) { const k = easeOutCubic((t - OUT) / (1 - OUT)); return { o: 1 - k, dy: -26 * k }; }
-      return { o: 1, dy: 0 };
+    // Wrap each reveal line's words in spans so they can stagger independently.
+    function wrapWords(el) {
+      const words = [];
+      const process = (node) => {
+        Array.from(node.childNodes).forEach((k) => {
+          if (k.nodeType === 3) {
+            const frag = document.createDocumentFragment();
+            k.textContent.split(/(\s+)/).forEach((part) => {
+              if (part === '') return;
+              if (/^\s+$/.test(part)) { frag.appendChild(document.createTextNode(part)); return; }
+              const s = document.createElement('span'); s.className = 'w'; s.textContent = part;
+              words.push(s); frag.appendChild(s);
+            });
+            node.replaceChild(frag, k);
+          } else if (k.nodeType === 1 && k.tagName !== 'BR') {
+            process(k);
+          }
+        });
+      };
+      process(el);
+      el._words = words;
     }
+    [...canRlines, ...oceanRlines, ...manRlines].forEach(wrapWords);
 
+    // Words ease up in sequence, hold, then drift up and fade together — scrubbed by scroll.
     function applyReveal(el, p) {
-      const r = revealLine(p, +el.dataset.start, +el.dataset.end);
-      el.style.opacity = r.o.toFixed(3);
-      el.style.transform = `translateY(calc(-50% + ${r.dy.toFixed(1)}px))`;
+      const start = +el.dataset.start, end = +el.dataset.end;
+      if (p <= start || p >= end) { el.style.opacity = '0'; return; }
+      el.style.opacity = '1';
+      el.style.transform = 'translateY(-50%)';
+      const t = (p - start) / (end - start);
+      const exit = clamp01((t - 0.74) / 0.26);
+      const ws = el._words, n = ws.length;
+      for (let i = 0; i < n; i++) {
+        const we = easeOutCubic(clamp01((t - (i / n) * 0.4) / 0.16));
+        ws[i].style.opacity = (we * (1 - exit)).toFixed(3);
+        ws[i].style.transform = `translateY(${((1 - we) * 16 - exit * 14).toFixed(1)}px)`;
+      }
     }
 
     function updateOverlay(p) {
