@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
 <link rel="icon" href="data:," />
-<title>VORTEX Original — Buy</title>
+<title>VORTEX Original - Premium Shop</title>
 <style>
   @font-face { font-family:'Bebas Neue'; src:url('fonts/bebas-neue-400.woff2') format('woff2'); font-weight:400; font-display:swap; }
   @font-face { font-family:'Space Grotesk'; src:url('fonts/space-grotesk-variable.woff2') format('woff2'); font-weight:300 700; font-display:swap; }
@@ -13,276 +13,287 @@
   @font-face { font-family:'Space Mono'; src:url('fonts/space-mono-700.woff2') format('woff2'); font-weight:700; font-display:swap; }
 
   :root{
-    --bg:#04080d; --ink:#eef4f8; --muted:rgba(238,244,248,.6); --accent:#4fc3d6;
-    --amber:#ffb454; --line:rgba(238,244,248,.10); --good:#5fd38a;
-    --spring:cubic-bezier(.34,1.56,.64,1); --smooth:cubic-bezier(.2,.7,.2,1);
+    --bg:#03070b; --panel:#071018; --panel-2:#0c1620; --ink:#eef4f8; --muted:rgba(238,244,248,.66);
+    --soft:rgba(238,244,248,.42); --accent:#4fc3d6; --accent-2:#b8f4ff; --amber:#ffb454; --good:#6be192;
+    --line:rgba(238,244,248,.13); --line-strong:rgba(238,244,248,.24);
+    --shadow:0 26px 80px rgba(0,0,0,.52); --smooth:cubic-bezier(.2,.7,.2,1); --spring:cubic-bezier(.34,1.56,.64,1);
   }
-  *{margin:0;padding:0;box-sizing:border-box}
-  html{scroll-behavior:smooth}
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth;background:var(--bg)}
   body{font-family:'Space Grotesk',system-ui,sans-serif;color:var(--ink);background:var(--bg);-webkit-font-smoothing:antialiased;overflow-x:hidden}
   a{color:inherit;text-decoration:none}
-  /* shader wallpaper */
+  button{font:inherit}
   #bg{position:fixed;inset:0;z-index:0;display:block;width:100%;height:100%}
-  .scrim{position:fixed;inset:0;z-index:1;pointer-events:none;background:radial-gradient(120% 90% at 50% 0%,transparent 30%,rgba(4,8,13,.55) 100%)}
+  .scrim{position:fixed;inset:0;z-index:1;pointer-events:none;background:
+    radial-gradient(70% 55% at 52% 14%,rgba(79,195,214,.16),transparent 62%),
+    linear-gradient(180deg,rgba(3,7,11,.08),rgba(3,7,11,.78) 72%,#03070b)}
   .page{position:relative;z-index:2}
-  .wrap{width:100%;max-width:1180px;margin:0 auto;padding:0 24px}
-  .eyebrow{font-family:'Space Mono',monospace;font-weight:700;font-size:.72rem;letter-spacing:.28em;text-transform:uppercase;color:var(--accent);display:inline-flex;align-items:center;gap:.7rem}
-  .eyebrow::before{content:'';width:30px;height:2px;background:var(--accent);box-shadow:0 0 10px var(--accent)}
-  h2.title{font-family:'Bebas Neue',sans-serif;font-size:clamp(2.6rem,6.5vw,5rem);letter-spacing:.03em;line-height:.95;text-transform:uppercase}
+  .wrap{width:100%;max-width:1200px;margin:0 auto;padding:0 24px}
+  .eyebrow{display:inline-flex;align-items:center;gap:.75rem;font-family:'Space Mono',monospace;font-weight:700;font-size:.68rem;letter-spacing:.24em;text-transform:uppercase;color:var(--accent)}
+  .eyebrow::before{content:"";width:32px;height:1px;background:var(--accent);box-shadow:0 0 18px rgba(79,195,214,.85)}
+  .title{font-family:'Bebas Neue',sans-serif;font-weight:400;letter-spacing:.035em;text-transform:uppercase;line-height:.9}
+  .btn{display:inline-flex;align-items:center;justify-content:center;min-height:48px;border-radius:999px;border:1px solid transparent;padding:.9rem 1.45rem;font-family:'Space Mono',monospace;font-weight:700;font-size:.72rem;letter-spacing:.14em;text-transform:uppercase;cursor:pointer;transition:transform .35s var(--spring),box-shadow .3s,background .3s,border-color .3s,color .3s}
+  .btn:active{transform:scale(.97)}
+  .btn-primary{background:var(--accent);color:#021017;box-shadow:0 0 36px rgba(79,195,214,.28)}
+  .btn-primary:hover{transform:translateY(-2px);box-shadow:0 0 52px rgba(79,195,214,.42)}
+  .btn-amber{background:var(--amber);color:#241403;box-shadow:0 0 34px rgba(255,180,84,.22)}
+  .btn-amber:hover{transform:translateY(-2px);box-shadow:0 0 48px rgba(255,180,84,.34)}
+  .btn-ghost{border-color:var(--line-strong);color:var(--ink);background:rgba(255,255,255,.03)}
+  .btn-ghost:hover{border-color:var(--accent);color:var(--accent)}
 
-  .btn{display:inline-block;text-align:center;font-family:'Space Mono',monospace;font-weight:700;letter-spacing:.14em;text-transform:uppercase;font-size:.78rem;padding:1rem 2rem;border-radius:100px;cursor:pointer;border:1px solid transparent;transition:transform .35s var(--spring),box-shadow .3s,background .3s,color .3s}
-  .btn:active{transform:scale(.96)}
-  .btn-primary{background:var(--accent);color:#03070c;box-shadow:0 0 30px -6px var(--accent)}
-  .btn-primary:hover{transform:translateY(-3px) scale(1.03);box-shadow:0 0 54px 0 var(--accent)}
-  .btn-amber{background:var(--amber);color:#2a1800;box-shadow:0 0 30px -8px var(--amber)}
-  .btn-amber:hover{transform:translateY(-3px) scale(1.03);box-shadow:0 0 54px -2px var(--amber)}
-  .btn-ghost{border-color:var(--line);color:var(--ink)}
-  .btn-ghost:hover{border-color:var(--accent);color:var(--accent);transform:translateY(-2px)}
+  nav{position:fixed;top:0;left:0;right:0;z-index:50;border-bottom:1px solid transparent;transition:background .35s,border-color .35s,backdrop-filter .35s}
+  nav.scrolled{background:rgba(3,7,11,.76);border-color:var(--line);backdrop-filter:blur(16px)}
+  nav .wrap{height:72px;display:flex;align-items:center;justify-content:space-between;gap:1rem}
+  .logo{font-family:'Bebas Neue',sans-serif;font-size:1.75rem;letter-spacing:.2em}
+  .nav-links{display:flex;align-items:center;gap:1.35rem;font-size:.84rem;color:var(--muted)}
+  .nav-links a:hover{color:var(--ink)}
+  .nav-links .btn{min-height:38px;padding:.58rem 1.1rem;font-size:.64rem}
+  .switcher{position:fixed;left:50%;bottom:18px;z-index:60;display:flex;gap:.35rem;padding:.36rem;border:1px solid var(--line);border-radius:999px;background:rgba(3,7,11,.78);backdrop-filter:blur(14px);transform:translateX(-50%);box-shadow:var(--shadow)}
+  .switcher a{border-radius:999px;padding:.55rem .82rem;font-family:'Space Mono',monospace;font-size:.57rem;letter-spacing:.11em;text-transform:uppercase;color:var(--muted);white-space:nowrap}
+  .switcher a.active{background:var(--ink);color:#03070b}
+  .switcher a:hover{color:var(--ink)}
 
-  nav{position:fixed;top:0;left:0;right:0;z-index:40;transition:background .4s,backdrop-filter .4s,border-color .4s;border-bottom:1px solid transparent}
-  nav.scrolled{background:rgba(4,8,13,.72);backdrop-filter:blur(14px);border-color:var(--line)}
-  nav .wrap{display:flex;align-items:center;justify-content:space-between;height:70px}
-  nav .logo{font-family:'Bebas Neue',sans-serif;font-size:1.7rem;letter-spacing:.18em}
-  nav .links{display:flex;gap:1.6rem;align-items:center;font-size:.82rem}
-  nav .links a.nl{color:var(--muted);transition:color .25s}
-  nav .links a.nl:hover{color:var(--ink)}
-  nav .btn{padding:.6rem 1.3rem}
-  @media(max-width:760px){nav .links a.nl{display:none}}
-
-  /* hero: product (left) + buy box (right) */
-  .hero{min-height:100vh;display:flex;align-items:center;padding:96px 0 8vh}
-  .hero .wrap{display:grid;grid-template-columns:1.05fr .95fr;gap:3vw;align-items:center}
-  .product{position:relative}
-  #can3d{width:100%;max-width:460px;aspect-ratio:880/720;display:block;cursor:grab;touch-action:pan-y;margin:0 auto;
-    -webkit-mask-image:radial-gradient(70% 70% at 50% 50%,#000 54%,transparent 100%);mask-image:radial-gradient(70% 70% at 50% 50%,#000 54%,transparent 100%);
-    filter:drop-shadow(0 40px 70px rgba(0,0,0,.6))}
+  .hero{min-height:100vh;display:grid;align-items:center;padding:116px 0 58px}
+  .hero-grid{display:grid;grid-template-columns:minmax(0,1.05fr) minmax(360px,.95fr);gap:clamp(2rem,4vw,4.4rem);align-items:center}
+  .product-stage{position:relative;min-height:560px;display:grid;place-items:center}
+  .product-halo{position:absolute;inset:9% 2%;border-radius:46%;background:radial-gradient(circle at 50% 48%,rgba(79,195,214,.28),rgba(79,195,214,.08) 38%,transparent 68%);filter:blur(22px)}
+  .product-card{position:relative;width:min(100%,560px);padding:28px;border:1px solid var(--line);border-radius:30px;background:linear-gradient(180deg,rgba(238,244,248,.08),rgba(238,244,248,.02));box-shadow:var(--shadow);overflow:hidden}
+  .product-card::before{content:"";position:absolute;inset:0;background:linear-gradient(120deg,rgba(255,255,255,.14),transparent 34%,transparent 70%,rgba(79,195,214,.13));pointer-events:none}
+  #can3d{position:relative;z-index:1;width:100%;aspect-ratio:880/720;display:block;cursor:grab;touch-action:pan-y;filter:drop-shadow(0 34px 56px rgba(0,0,0,.5))}
   #can3d:active{cursor:grabbing}
-  .product .hint{text-align:center;margin-top:.4rem;font-family:'Space Mono',monospace;font-size:.6rem;letter-spacing:.2em;text-transform:uppercase;color:var(--accent);opacity:.7}
-  .product .ring{position:absolute;inset:0;z-index:-1;background:radial-gradient(45% 45% at 50% 48%,rgba(79,195,214,.22),transparent 70%);filter:blur(20px)}
+  .spin-hint{position:relative;z-index:1;text-align:center;margin-top:12px;font-family:'Space Mono',monospace;font-size:.61rem;letter-spacing:.18em;text-transform:uppercase;color:var(--accent)}
+  .hero-copy h1{font-size:clamp(4rem,9vw,8.8rem);margin:.72rem 0 .75rem}
+  .subhead{max-width:34rem;color:var(--muted);font-size:clamp(1rem,1.7vw,1.22rem);line-height:1.55}
+  .rating-row{display:flex;align-items:center;gap:.72rem;margin:1.2rem 0;color:var(--muted);font-size:.9rem}
+  .stars{color:var(--amber);letter-spacing:.08em;white-space:nowrap}
+  .rating-row a{color:var(--accent)}
+  .buy-box{margin-top:1.1rem;border:1px solid var(--line-strong);border-radius:24px;padding:1.35rem;background:rgba(5,11,17,.78);box-shadow:var(--shadow);backdrop-filter:blur(12px)}
+  .price-line{display:flex;align-items:flex-end;gap:.62rem;flex-wrap:wrap}
+  .price{font-family:'Bebas Neue',sans-serif;font-size:3.35rem;line-height:.9}
+  .was{text-decoration:line-through;color:var(--soft)}
+  .per{font-family:'Space Mono',monospace;font-size:.66rem;letter-spacing:.09em;color:var(--muted)}
+  .stock{margin-top:.9rem;color:var(--good);font-weight:700}
+  .delivery{margin-top:.28rem;color:var(--muted);line-height:1.55;font-size:.92rem}
+  .delivery b{color:var(--ink)}
+  .purchase-row{display:flex;align-items:center;justify-content:space-between;gap:1rem;margin:1.05rem 0}
+  .qty{display:inline-flex;align-items:center;border:1px solid var(--line);border-radius:999px;background:rgba(255,255,255,.03);overflow:hidden}
+  .qty button{width:40px;height:40px;border:0;background:transparent;color:var(--ink);cursor:pointer}
+  .qty button:hover{background:rgba(255,255,255,.08)}
+  .qty span{min-width:34px;text-align:center;font-family:'Space Mono',monospace}
+  .pack-note{color:var(--muted);font-size:.9rem;text-align:right}
+  .buy-actions{display:grid;grid-template-columns:1fr 1fr;gap:.72rem}
+  .secure,.ships{color:var(--muted);font-size:.82rem;line-height:1.5}
+  .secure{margin-top:.9rem;font-family:'Space Mono',monospace;font-size:.58rem;letter-spacing:.1em;text-transform:uppercase}
+  .ships b{color:var(--ink)}
+  .trust-strip{border-top:1px solid var(--line);border-bottom:1px solid var(--line);background:rgba(5,11,17,.64);backdrop-filter:blur(10px)}
+  .trust-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1px}
+  .trust{padding:1.2rem;text-align:center;border-left:1px solid var(--line)}
+  .trust:first-child{border-left:0}
+  .trust b{display:block;font-family:'Bebas Neue',sans-serif;font-size:2.3rem;letter-spacing:.04em;color:var(--accent);line-height:.9}
+  .trust span{font-family:'Space Mono',monospace;font-size:.62rem;letter-spacing:.14em;text-transform:uppercase;color:var(--muted)}
 
-  .buy h1{font-family:'Bebas Neue',sans-serif;font-size:clamp(2.8rem,6vw,4.4rem);letter-spacing:.02em;line-height:.9;text-transform:uppercase;margin:.6rem 0 .3rem}
-  .buy .tag{color:var(--muted);font-size:1rem;margin-bottom:.8rem}
-  .rate{display:flex;align-items:center;gap:.6rem;font-size:.85rem;color:var(--muted);margin-bottom:1.1rem}
-  .rate .stars{color:var(--amber);letter-spacing:.12em}
-  .rate a{color:var(--accent)}
-  .pricebox{border:1px solid var(--line);border-radius:18px;padding:1.6rem;background:rgba(8,14,22,.66);backdrop-filter:blur(8px)}
-  .price{display:flex;align-items:baseline;gap:.6rem}
-  .price .now{font-family:'Bebas Neue',sans-serif;font-size:2.8rem;color:var(--ink);line-height:1}
-  .price .was{color:var(--muted);text-decoration:line-through;font-size:1rem}
-  .price .per{color:var(--muted);font-family:'Space Mono',monospace;font-size:.62rem;letter-spacing:.1em}
-  .stock{color:var(--good);font-weight:600;margin:.7rem 0 .2rem}
-  .deliver{color:var(--muted);font-size:.86rem;line-height:1.5}
-  .deliver b{color:var(--ink)}
-  .qtyrow{display:flex;align-items:center;gap:1rem;margin:1.1rem 0}
-  .qty{display:inline-flex;align-items:center;border:1px solid var(--line);border-radius:100px;overflow:hidden}
-  .qty button{background:none;border:none;color:var(--ink);font-size:1.1rem;width:38px;height:38px;cursor:pointer;transition:background .2s}
-  .qty button:hover{background:rgba(238,244,248,.08)}
-  .qty span{min-width:30px;text-align:center;font-family:'Space Mono',monospace}
-  .buy-actions{display:grid;grid-template-columns:1fr 1fr;gap:.7rem;margin-top:.3rem}
-  .secure{margin-top:.9rem;font-family:'Space Mono',monospace;font-size:.58rem;letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
-  .soldby{margin-top:.5rem;font-size:.78rem;color:var(--muted)}
-  .soldby b{color:var(--ink)}
-  @media(max-width:860px){.hero .wrap{grid-template-columns:1fr;text-align:center}.product{order:-1}.eyebrow{justify-content:center}.rate,.price{justify-content:center}.buy-actions{max-width:420px;margin:0 auto}}
-
-  .marquee{border-top:1px solid var(--line);border-bottom:1px solid var(--line);padding:1rem 0;overflow:hidden;white-space:nowrap;background:rgba(8,14,22,.6);backdrop-filter:blur(6px)}
-  .marquee div{display:inline-block;animation:mq 22s linear infinite}
-  .marquee span{font-family:'Bebas Neue',sans-serif;font-size:1.4rem;letter-spacing:.08em;text-transform:uppercase;margin:0 1.3rem;color:var(--muted)}
-  .marquee b{color:var(--accent)}
-  @keyframes mq{from{transform:translateX(0)}to{transform:translateX(-50%)}}
-
-  section.sec{padding:13vh 0;position:relative}
-  .sec.solid{background:linear-gradient(180deg,rgba(4,8,13,.4),rgba(4,8,13,.82) 40%,rgba(4,8,13,.4))}
-  .sec-head{text-align:center;margin-bottom:6vh}
-  .sec-head .title{margin-top:1rem}
-
-  /* feature beats (Apple-style) */
-  .beat{display:grid;grid-template-columns:1fr 1fr;gap:4vw;align-items:center;margin:10vh 0}
-  .beat:nth-child(even) .beat-media{order:2}
-  .beat h3{font-family:'Bebas Neue',sans-serif;font-size:clamp(2.2rem,5vw,3.6rem);letter-spacing:.03em;text-transform:uppercase;line-height:.95}
-  .beat p{color:var(--muted);font-size:1.05rem;line-height:1.6;margin-top:1rem;max-width:30rem}
-  .beat-media{height:300px;border-radius:22px;border:1px solid var(--line);display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden;background:rgba(8,14,22,.5)}
-  .beat-media svg{width:90px;height:90px;stroke:var(--accent);stroke-width:1.5;fill:none;stroke-linecap:round;stroke-linejoin:round;filter:drop-shadow(0 0 18px rgba(79,195,214,.6))}
-  .beat-media .blob{position:absolute;width:60%;height:60%;border-radius:50%;background:radial-gradient(circle,rgba(79,195,214,.3),transparent 70%);filter:blur(30px);animation:pulse 5s var(--smooth) infinite}
-  @keyframes pulse{0%,100%{transform:scale(1);opacity:.6}50%{transform:scale(1.2);opacity:1}}
-  @media(max-width:820px){.beat{grid-template-columns:1fr;text-align:center}.beat:nth-child(even) .beat-media{order:0}.beat p{margin-left:auto;margin-right:auto}}
-
-  /* reviews (amazon-style) */
-  .rev-grid{display:grid;grid-template-columns:.8fr 1.2fr;gap:3vw;align-items:start}
-  .rev-summary .big{font-family:'Bebas Neue',sans-serif;font-size:4.5rem;line-height:1;color:var(--accent)}
-  .rev-summary .stars{color:var(--amber);letter-spacing:.15em;font-size:1.1rem}
-  .rev-summary .count{color:var(--muted);font-size:.85rem;margin-top:.4rem}
-  .bars{margin-top:1.4rem;display:flex;flex-direction:column;gap:.5rem}
-  .bar{display:flex;align-items:center;gap:.7rem;font-size:.78rem;color:var(--muted)}
-  .bar .track{flex:1;height:8px;border-radius:6px;background:rgba(238,244,248,.1);overflow:hidden}
-  .bar .fill{height:100%;background:var(--amber);width:0;transition:width 1.1s var(--smooth)}
-  .rev-list{display:flex;flex-direction:column;gap:1rem}
-  .rev{border:1px solid var(--line);border-radius:16px;padding:1.4rem;background:rgba(8,14,22,.55)}
-  .rev .top{display:flex;justify-content:space-between;align-items:center;font-size:.78rem;color:var(--muted)}
-  .rev .stars{color:var(--amber);letter-spacing:.1em}
-  .rev h4{margin:.5rem 0 .3rem;font-size:1rem}
-  .rev p{color:var(--muted);line-height:1.55;font-size:.92rem}
-  @media(max-width:820px){.rev-grid{grid-template-columns:1fr;gap:5vh}}
-
-  .specs{display:grid;grid-template-columns:repeat(4,1fr);gap:1.4rem;text-align:center}
-  .specs b{display:block;font-family:'Bebas Neue',sans-serif;font-size:clamp(2.4rem,5vw,3.4rem);color:var(--accent);line-height:1}
-  .specs span{font-family:'Space Mono',monospace;font-size:.6rem;letter-spacing:.16em;text-transform:uppercase;color:var(--muted)}
-  @media(max-width:620px){.specs{grid-template-columns:repeat(2,1fr);gap:3rem 1rem}}
-
-  .faq{max-width:760px;margin:0 auto}
+  section.sec{position:relative;padding:clamp(76px,12vh,132px) 0}
+  .sec-head{max-width:740px;margin:0 auto 56px;text-align:center}
+  .sec-head .title{font-size:clamp(3rem,7vw,6.2rem);margin-top:1rem}
+  .feature{display:grid;grid-template-columns:1fr 1fr;gap:clamp(1.5rem,4vw,4rem);align-items:center;min-height:64vh;margin:48px 0}
+  .feature:nth-child(even) .feature-media{order:2}
+  .feature h3{font-size:clamp(3rem,7vw,6.1rem)}
+  .feature p{max-width:31rem;margin-top:1rem;color:var(--muted);font-size:1.08rem;line-height:1.65}
+  .feature-media{position:relative;min-height:360px;border:1px solid var(--line);border-radius:28px;overflow:hidden;background:#071018;box-shadow:var(--shadow)}
+  .feature-media img{width:100%;height:100%;min-height:360px;display:block;object-fit:cover;filter:saturate(.92) contrast(1.05)}
+  .feature-media::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,transparent,rgba(3,7,11,.34));pointer-events:none}
+  .feature-badge{position:absolute;left:20px;bottom:20px;padding:.65rem .82rem;border:1px solid var(--line);border-radius:999px;background:rgba(3,7,11,.68);font-family:'Space Mono',monospace;font-size:.62rem;letter-spacing:.12em;text-transform:uppercase;color:var(--accent);backdrop-filter:blur(12px)}
+  .commerce{display:grid;grid-template-columns:.72fr 1.28fr;gap:clamp(1.5rem,4vw,4rem);align-items:start}
+  .review-summary{position:sticky;top:100px;border:1px solid var(--line);border-radius:24px;padding:1.5rem;background:rgba(7,16,24,.68)}
+  .review-summary .big{font-family:'Bebas Neue',sans-serif;font-size:5rem;line-height:.9;color:var(--accent)}
+  .bars{display:grid;gap:.56rem;margin-top:1.25rem}
+  .bar{display:grid;grid-template-columns:42px 1fr 38px;gap:.7rem;align-items:center;color:var(--muted);font-size:.78rem}
+  .track{height:8px;border-radius:99px;background:rgba(255,255,255,.09);overflow:hidden}
+  .fill{display:block;height:100%;width:0;background:var(--amber);transition:width 1s var(--smooth)}
+  .reviews{display:grid;gap:1rem}
+  .review{border:1px solid var(--line);border-radius:20px;padding:1.2rem;background:rgba(7,16,24,.62)}
+  .review-top{display:flex;justify-content:space-between;gap:1rem;color:var(--muted);font-size:.78rem}
+  .review h4{font-size:1.05rem;margin:.55rem 0 .35rem}
+  .review p{color:var(--muted);line-height:1.58}
+  .faq{max-width:780px;margin:0 auto}
   .faq-item{border-bottom:1px solid var(--line)}
-  .faq-q{width:100%;text-align:left;background:none;border:none;color:var(--ink);font-family:'Space Grotesk';font-size:1.08rem;padding:1.4rem 0;cursor:pointer;display:flex;justify-content:space-between;gap:1rem}
-  .faq-q .pm{color:var(--accent);font-size:1.4rem;transition:transform .3s var(--spring)}
-  .faq-item.open .pm{transform:rotate(45deg)}
-  .faq-a{max-height:0;overflow:hidden;transition:max-height .4s var(--smooth);color:var(--muted);line-height:1.6}
-  .faq-a p{padding:0 0 1.4rem}
-
+  .faq-q{width:100%;display:flex;justify-content:space-between;gap:1rem;padding:1.35rem 0;border:0;background:transparent;color:var(--ink);text-align:left;cursor:pointer;font-size:1.05rem}
+  .faq-q span{color:var(--accent);font-size:1.35rem;transition:transform .3s var(--spring)}
+  .faq-item.open .faq-q span{transform:rotate(45deg)}
+  .faq-a{max-height:0;overflow:hidden;color:var(--muted);line-height:1.62;transition:max-height .36s var(--smooth)}
+  .faq-a p{padding:0 0 1.25rem}
   .final{text-align:center}
-  footer{border-top:1px solid var(--line);padding:4vh 0;color:var(--muted)}
-  footer .wrap{display:flex;justify-content:space-between;flex-wrap:wrap;gap:1rem;align-items:center;font-size:.8rem}
-  footer .logo{font-family:'Bebas Neue';font-size:1.4rem;letter-spacing:.18em;color:var(--ink)}
-  footer a{color:var(--muted);margin-left:1.3rem;transition:color .2s}
+  .final .title{font-size:clamp(3.4rem,8vw,7.4rem)}
+  footer{padding:44px 0 86px;border-top:1px solid var(--line);color:var(--muted)}
+  footer .wrap{display:flex;align-items:center;justify-content:space-between;gap:1rem;flex-wrap:wrap}
+  footer a{margin-left:1.1rem;color:var(--muted)}
   footer a:hover{color:var(--accent)}
-
-  .reveal{opacity:0;transform:translateY(34px);transition:opacity .9s var(--smooth),transform .9s var(--spring)}
+  .reveal{opacity:0;transform:translateY(32px);transition:opacity .82s var(--smooth),transform .82s var(--spring)}
   .reveal.in{opacity:1;transform:none}
-  @media(prefers-reduced-motion:reduce){.reveal{opacity:1;transform:none;transition:none}.marquee div,.beat-media .blob{animation:none}}
+
+  @media(max-width:920px){
+    .hero{padding-top:96px}
+    .hero-grid,.feature,.commerce{grid-template-columns:1fr}
+    .hero-copy{text-align:center}
+    .hero-copy .eyebrow,.rating-row,.price-line{justify-content:center}
+    .subhead{margin-inline:auto}
+    .product-stage{min-height:420px;order:-1}
+    .review-summary{position:relative;top:auto}
+    .feature:nth-child(even) .feature-media{order:0}
+  }
+  @media(max-width:680px){
+    .wrap{padding:0 20px}
+    .nav-links a:not(.btn){display:none}
+    .hero{padding-top:152px}
+    .hero-grid{gap:1.35rem}
+    .product-card{padding:12px;border-radius:22px}
+    .product-stage{min-height:340px}
+    .hero-copy h1{font-size:clamp(3.5rem,16vw,5.6rem)}
+    .buy-box{padding:1rem;border-radius:20px}
+    .purchase-row{align-items:flex-start}
+    .buy-actions{grid-template-columns:1fr}
+    .trust-grid{grid-template-columns:repeat(2,1fr)}
+    .trust:nth-child(3){border-left:0;border-top:1px solid var(--line)}
+    .trust:nth-child(4){border-top:1px solid var(--line)}
+    .feature-media,.feature-media img{min-height:270px}
+    .switcher{top:84px;bottom:auto;max-width:calc(100vw - 24px);overflow:auto}
+    .switcher a{font-size:.52rem;padding:.5rem .62rem}
+  }
+  @media(prefers-reduced-motion:reduce){
+    html{scroll-behavior:auto}
+    .reveal{opacity:1;transform:none;transition:none}
+    .fill{transition:none}
+  }
 </style>
 </head>
 <body>
   <canvas id="bg"></canvas>
   <div class="scrim"></div>
-
   <div class="page">
-  <nav id="nav"><div class="wrap">
-    <a href="#top" class="logo">VORTEX</a>
-    <div class="links">
-      <a href="#features" class="nl">Features</a>
-      <a href="#reviews" class="nl">Reviews</a>
-      <a href="index.html" class="nl">The film</a>
-      <a href="#buy" class="btn btn-primary">Buy</a>
-    </div>
-  </div></nav>
-
-  <header class="hero" id="top"><div class="wrap" id="buy">
-    <div class="product">
-      <div class="ring"></div>
-      <canvas id="can3d" aria-label="Spin the VORTEX can"></canvas>
-      <div class="hint">↻ Drag to spin</div>
-    </div>
-    <div class="buy">
-      <span class="eyebrow reveal">Sparkling focus energy</span>
-      <h1 class="reveal">VORTEX<br>Original</h1>
-      <p class="tag reveal">Zero sugar · 200&nbsp;mg caffeine · 16&nbsp;fl&nbsp;oz · Clarity from chaos.</p>
-      <div class="rate reveal"><span class="stars">★★★★★</span> 4.9 <a href="#reviews">2,481 ratings</a></div>
-      <div class="pricebox reveal">
-        <div class="price"><span class="now">$29.99</span><span class="was">$35.99</span><span class="per">$2.50 / can</span></div>
-        <div class="stock">In stock</div>
-        <div class="deliver">FREE delivery <b>Tue, Jun 24</b>. Order within <b>8 hrs</b> for fastest arrival.</div>
-        <div class="qtyrow">
-          <div class="qty"><button id="qminus" aria-label="decrease">–</button><span id="qval">1</span><button id="qplus" aria-label="increase">+</button></div>
-          <span class="deliver">12-pack · mix any flavors</span>
-        </div>
-        <div class="buy-actions">
-          <a href="#" class="btn btn-amber" id="addcart">Add to Cart</a>
-          <a href="#" class="btn btn-primary" id="buynow">Buy Now</a>
-        </div>
-        <div class="secure">🔒 Secure transaction</div>
-        <div class="soldby">Ships from &amp; sold by <b>VORTEX</b>. 30-day focus-back guarantee.</div>
+    <nav id="nav"><div class="wrap">
+      <a class="logo" href="#top">VORTEX</a>
+      <div class="nav-links">
+        <a href="#features">Details</a>
+        <a href="#reviews">Reviews</a>
+        <a href="index.html">The film</a>
+        <a class="btn btn-primary" href="#buy">Buy</a>
       </div>
-    </div>
-  </div></header>
+    </div></nav>
 
-  <div class="marquee"><div>
-    <span>Zero sugar <b>✦</b></span><span>200mg caffeine <b>✦</b></span><span>No crash <b>✦</b></span><span>Clean energy <b>✦</b></span>
-    <span>Zero sugar <b>✦</b></span><span>200mg caffeine <b>✦</b></span><span>No crash <b>✦</b></span><span>Clean energy <b>✦</b></span>
-  </div></div>
-
-  <section class="sec solid" id="features"><div class="wrap">
-    <div class="sec-head"><span class="eyebrow reveal">Why VORTEX</span><h2 class="title reveal">Built to pull you in</h2></div>
-
-    <div class="beat">
-      <div class="beat-copy reveal"><h3>Razor focus</h3><p>200&nbsp;mg of caffeine, tuned with L-theanine for clean, locked-in attention — the noise just goes quiet.</p></div>
-      <div class="beat-media reveal"><div class="blob"></div><svg viewBox="0 0 48 48"><circle cx="24" cy="24" r="17"/><circle cx="24" cy="24" r="8"/></svg></div>
+    <div class="switcher" aria-label="Shop comparison pages">
+      <a class="active" href="shop.html">Static upgrade</a>
+      <a href="shop-react.html">React motion</a>
+      <a href="shop-original.html">Original</a>
     </div>
-    <div class="beat">
-      <div class="beat-copy reveal"><h3>No crash</h3><p>A smooth climb and an even smoother landing. Sustained energy that never drops you off a cliff.</p></div>
-      <div class="beat-media reveal"><div class="blob"></div><svg viewBox="0 0 48 48"><polyline points="6 36 17 19 27 16 42 15"/></svg></div>
-    </div>
-    <div class="beat">
-      <div class="beat-copy reveal"><h3>Zero sugar</h3><p>All the drive, none of the sugar load. No artificial colors. Just clarity, on demand.</p></div>
-      <div class="beat-media reveal"><div class="blob"></div><svg viewBox="0 0 48 48"><circle cx="24" cy="24" r="16"/><line x1="13" y1="13" x2="35" y2="35"/></svg></div>
-    </div>
-  </div></section>
 
-  <section class="sec"><div class="wrap">
-    <div class="specs">
-      <div class="reveal"><b class="num" data-to="200">0</b><span>mg caffeine</span></div>
-      <div class="reveal"><b class="num" data-to="0">0</b><span>g sugar</span></div>
-      <div class="reveal"><b class="num" data-to="16">0</b><span>fl oz</span></div>
-      <div class="reveal"><b class="num" data-to="49" data-dec="1">0</b><span>★ rating</span></div>
-    </div>
-  </div></section>
+    <header class="hero" id="top"><div class="wrap hero-grid" id="buy">
+      <div class="product-stage reveal">
+        <div class="product-halo"></div>
+        <div class="product-card">
+          <canvas id="can3d" aria-label="Interactive VORTEX Original can"></canvas>
+          <div class="spin-hint">Drag to spin</div>
+        </div>
+      </div>
+      <div class="hero-copy">
+        <span class="eyebrow reveal">VORTEX Original only</span>
+        <h1 class="title reveal">Energy without the noise.</h1>
+        <p class="subhead reveal">A crisp sparkling focus drink with zero sugar, 200 mg caffeine, and the calm pull of the original ocean swirl.</p>
+        <div class="rating-row reveal"><span class="stars">&#9733;&#9733;&#9733;&#9733;&#9733;</span><span>4.9</span><a href="#reviews">2,481 ratings</a></div>
+        <div class="buy-box reveal">
+          <div class="price-line"><span class="price">$29.99</span><span class="was">$35.99</span><span class="per">$2.50 / can</span></div>
+          <div class="stock">In stock</div>
+          <div class="delivery">FREE delivery <b>Tue, Jun 24</b>. Order within <b>8 hrs</b> for fastest arrival.</div>
+          <div class="purchase-row">
+            <div class="qty"><button id="qminus" aria-label="Decrease quantity">-</button><span id="qval">1</span><button id="qplus" aria-label="Increase quantity">+</button></div>
+            <div class="pack-note">12-pack<br>VORTEX Original</div>
+          </div>
+          <div class="buy-actions">
+            <a href="#" class="btn btn-amber" id="addcart">Add to Cart</a>
+            <a href="#" class="btn btn-primary" id="buynow">Buy Now</a>
+          </div>
+          <div class="secure">Secure demo transaction</div>
+          <div class="ships">Ships from and sold by <b>VORTEX</b>. 30-day focus-back guarantee.</div>
+        </div>
+      </div>
+    </div></header>
 
-  <section class="sec solid" id="reviews"><div class="wrap">
-    <div class="sec-head"><span class="eyebrow reveal">Customer reviews</span><h2 class="title reveal">People in the zone</h2></div>
-    <div class="rev-grid">
-      <div class="rev-summary reveal">
+    <div class="trust-strip"><div class="wrap trust-grid">
+      <div class="trust reveal"><b>200</b><span>mg caffeine</span></div>
+      <div class="trust reveal"><b>0</b><span>g sugar</span></div>
+      <div class="trust reveal"><b>16</b><span>fl oz</span></div>
+      <div class="trust reveal"><b>1</b><span>original flavor</span></div>
+    </div></div>
+
+    <section class="sec" id="features"><div class="wrap">
+      <div class="sec-head"><span class="eyebrow reveal">Product detail</span><h2 class="title reveal">Built like a ritual.</h2></div>
+      <div class="feature">
+        <div class="feature-copy reveal"><h3 class="title">Razor focus</h3><p>VORTEX Original keeps the brief simple: clean caffeine, sparkling lift, and a smoother focus curve for deep work, training, or the late push.</p></div>
+        <div class="feature-media reveal"><img src="frames/frame_0188.jpg" alt="VORTEX Original can detail"><span class="feature-badge">Original can</span></div>
+      </div>
+      <div class="feature">
+        <div class="feature-copy reveal"><h3 class="title">No sugar load</h3><p>The taste stays cold, crisp, and direct without turning into syrup. One flavor, one job: pull you into the zone.</p></div>
+        <div class="feature-media reveal"><img src="ocean/ocean_0068.jpg" alt="Ocean vortex texture"><span class="feature-badge">Ocean swirl</span></div>
+      </div>
+      <div class="feature">
+        <div class="feature-copy reveal"><h3 class="title">Ready when you are</h3><p>Stock a 12-pack of the original. No sampler decisions, no flavor grid, no distractions from the product you came to buy.</p></div>
+        <div class="feature-media reveal"><img src="man/man_0068.jpg" alt="Person drinking VORTEX Original"><span class="feature-badge">Focus moment</span></div>
+      </div>
+    </div></section>
+
+    <section class="sec" id="reviews"><div class="wrap commerce">
+      <div class="review-summary reveal">
+        <span class="eyebrow">Customer signal</span>
         <div class="big">4.9</div>
-        <div class="stars">★★★★★</div>
-        <div class="count">2,481 global ratings</div>
+        <div class="stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+        <p class="delivery">2,481 global ratings</p>
         <div class="bars">
-          <div class="bar"><span>5★</span><div class="track"><i class="fill" data-w="88"></i></div><span>88%</span></div>
-          <div class="bar"><span>4★</span><div class="track"><i class="fill" data-w="9"></i></div><span>9%</span></div>
-          <div class="bar"><span>3★</span><div class="track"><i class="fill" data-w="2"></i></div><span>2%</span></div>
-          <div class="bar"><span>2★</span><div class="track"><i class="fill" data-w="1"></i></div><span>1%</span></div>
-          <div class="bar"><span>1★</span><div class="track"><i class="fill" data-w="0"></i></div><span>0%</span></div>
+          <div class="bar"><span>5 star</span><div class="track"><i class="fill" data-w="88"></i></div><span>88%</span></div>
+          <div class="bar"><span>4 star</span><div class="track"><i class="fill" data-w="9"></i></div><span>9%</span></div>
+          <div class="bar"><span>3 star</span><div class="track"><i class="fill" data-w="2"></i></div><span>2%</span></div>
+          <div class="bar"><span>2 star</span><div class="track"><i class="fill" data-w="1"></i></div><span>1%</span></div>
+          <div class="bar"><span>1 star</span><div class="track"><i class="fill" data-w="0"></i></div><span>0%</span></div>
         </div>
       </div>
-      <div class="rev-list">
-        <div class="rev reveal"><div class="top"><span class="stars">★★★★★</span><span>Verified Purchase</span></div><h4>First one that doesn't wreck me</h4><p>Genuinely the first energy drink that doesn't leave me wired then crashing. Pure, even focus for hours.</p><div class="top">— Mara K.</div></div>
-        <div class="rev reveal"><div class="top"><span class="stars">★★★★★</span><span>Verified Purchase</span></div><h4>Tastes unreal for zero sugar</h4><p>Can't believe it's zero sugar. The flavor is clean and crisp. The 12-pack disappears way too fast.</p><div class="top">— Devon R.</div></div>
-        <div class="rev reveal"><div class="top"><span class="stars">★★★★★</span><span>Verified Purchase</span></div><h4>My deep-work ritual</h4><p>I crack one before deep work and the noise just goes quiet. Completely hooked on the ritual.</p><div class="top">— Sofia L.</div></div>
+      <div class="reviews">
+        <div class="review reveal"><div class="review-top"><span class="stars">&#9733;&#9733;&#9733;&#9733;&#9733;</span><span>Verified Purchase</span></div><h4>First energy drink that feels calm.</h4><p>It hits quickly without making me feel scattered. Original is the only flavor I need in the fridge.</p></div>
+        <div class="review reveal"><div class="review-top"><span class="stars">&#9733;&#9733;&#9733;&#9733;&#9733;</span><span>Verified Purchase</span></div><h4>Clean taste, no sugar crash.</h4><p>Cold, sharp, and not too sweet. The 12-pack is the right format because I can just restock the original.</p></div>
+        <div class="review reveal"><div class="review-top"><span class="stars">&#9733;&#9733;&#9733;&#9733;&#9733;</span><span>Verified Purchase</span></div><h4>My deep-work can.</h4><p>I open one before long design sessions. The branding feels premium and the focus feels steady.</p></div>
       </div>
-    </div>
-  </div></section>
+    </div></section>
 
-  <section class="sec" id="faq"><div class="wrap">
-    <div class="sec-head"><span class="eyebrow reveal">Good to know</span><h2 class="title reveal">Questions</h2></div>
-    <div class="faq">
-      <div class="faq-item reveal"><button class="faq-q">How much caffeine is in a can?<span class="pm">+</span></button><div class="faq-a"><p>200&nbsp;mg per 16&nbsp;fl&nbsp;oz can, paired with L-theanine for calm, focused energy instead of jitters.</p></div></div>
-      <div class="faq-item reveal"><button class="faq-q">Is it really zero sugar?<span class="pm">+</span></button><div class="faq-a"><p>Yes — zero grams of sugar, zero artificial colors, sweetened cleanly so there's no crash.</p></div></div>
-      <div class="faq-item reveal"><button class="faq-q">When will it arrive?<span class="pm">+</span></button><div class="faq-a"><p>Free delivery in 2–4 days. Order within the window shown for the fastest arrival.</p></div></div>
-      <div class="faq-item reveal"><button class="faq-q">What's the guarantee?<span class="pm">+</span></button><div class="faq-a"><p>A 30-day focus-back guarantee. If VORTEX isn't your thing, we refund the pack — no questions.</p></div></div>
-    </div>
-  </div></section>
+    <section class="sec"><div class="wrap">
+      <div class="sec-head"><span class="eyebrow reveal">Good to know</span><h2 class="title reveal">Questions</h2></div>
+      <div class="faq">
+        <div class="faq-item reveal"><button class="faq-q">How much caffeine is in one can?<span>+</span></button><div class="faq-a"><p>Each 16 fl oz can has 200 mg caffeine. VORTEX is intended for adults who already tolerate caffeine.</p></div></div>
+        <div class="faq-item reveal"><button class="faq-q">Are there other versions on this page?<span>+</span></button><div class="faq-a"><p>No. This shop is only selling VORTEX Original, sold as a 12-pack.</p></div></div>
+        <div class="faq-item reveal"><button class="faq-q">Is checkout real?<span>+</span></button><div class="faq-a"><p>No. Add to Cart and Buy Now are demo interactions for this product page prototype.</p></div></div>
+        <div class="faq-item reveal"><button class="faq-q">What is the guarantee?<span>+</span></button><div class="faq-a"><p>A 30-day focus-back guarantee is shown as part of the commerce concept.</p></div></div>
+      </div>
+    </div></section>
 
-  <section class="sec final"><div class="wrap">
-    <h2 class="title reveal">Ready to enter the zone?</h2>
-    <p class="tag reveal" style="color:var(--muted);max-width:32rem;margin:1.2rem auto 2rem">Zero sugar. 200&nbsp;mg caffeine. No crash. The whole storm, in a can.</p>
-    <a href="#buy" class="btn btn-primary reveal">Buy VORTEX Original</a>
-  </div></section>
+    <section class="sec final"><div class="wrap">
+      <h2 class="title reveal">Stock the original.</h2>
+      <p class="subhead reveal" style="margin:1rem auto 1.7rem">Zero sugar. 200 mg caffeine. One flavor. One clear decision.</p>
+      <a href="#buy" class="btn btn-primary reveal">Buy VORTEX Original</a>
+    </div></section>
 
-  <footer><div class="wrap">
-    <span class="logo">VORTEX</span>
-    <div><span>© VORTEX — Crafted for focus</span><a href="index.html">The film</a><a href="#top">Top</a></div>
-  </div></footer>
+    <footer><div class="wrap">
+      <span class="logo">VORTEX</span>
+      <div><span>Crafted for focus</span><a href="index.html">The film</a><a href="shop-react.html">React version</a><a href="#top">Top</a></div>
+    </div></footer>
   </div>
 
   <script type="importmap">{ "imports": { "three": "./libs/three.module.js" } }</script>
   <script type="module">
     import * as THREE from 'three';
 
-    /* ---------- Shader wallpaper (animated vortex) ---------- */
     (function(){
       const canvas = document.getElementById('bg');
       const renderer = new THREE.WebGLRenderer({ canvas, antialias:true });
       renderer.setPixelRatio(Math.min(window.devicePixelRatio,1.75));
       const scene = new THREE.Scene();
       const camera = new THREE.Camera();
-      const uniforms = {
-        uTime:{value:0}, uRes:{value:new THREE.Vector2(1,1)},
-        uMouse:{value:new THREE.Vector2(0,0)}, uScroll:{value:0}
-      };
+      const uniforms = { uTime:{value:0}, uRes:{value:new THREE.Vector2(1,1)}, uMouse:{value:new THREE.Vector2(0,0)}, uScroll:{value:0} };
       const frag = `
         precision highp float;
         varying vec2 vUv; uniform float uTime; uniform vec2 uRes; uniform vec2 uMouse; uniform float uScroll;
@@ -290,75 +301,55 @@
         float noise(vec2 p){vec2 i=floor(p),f=fract(p);float a=hash(i),b=hash(i+vec2(1.,0.)),c=hash(i+vec2(0.,1.)),d=hash(i+vec2(1.,1.));vec2 u=f*f*(3.-2.*f);return mix(mix(a,b,u.x),mix(c,d,u.x),u.y);}
         float fbm(vec2 p){float v=0.,a=.5;for(int i=0;i<5;i++){v+=a*noise(p);p*=2.02;a*=.5;}return v;}
         void main(){
-          vec2 uv=vUv; vec2 p=uv-0.5; p.x*=uRes.x/uRes.y;
-          p+=uMouse*0.06; p.y+=uScroll*0.15;
-          float r=length(p); float ang=atan(p.y,p.x);
-          ang+=(0.55/(r+0.18))*0.6 + uTime*0.06;          // swirl
-          vec2 q=vec2(cos(ang),sin(ang))*r;
-          float n=fbm(q*2.2+uTime*0.04);
-          n=fbm(q*3.0+n*1.6-uTime*0.025);
-          vec3 dark=vec3(0.016,0.031,0.051);
-          vec3 teal=vec3(0.31,0.76,0.84);
-          vec3 deep=vec3(0.05,0.13,0.22);
-          vec3 col=mix(dark,deep,smoothstep(0.2,0.8,n));
-          col=mix(col,teal,smoothstep(0.55,0.95,n)*0.55);
-          col+=teal*pow(max(0.,1.-r*1.15),3.5)*0.18;       // center glow
-          col*=smoothstep(1.25,0.15,r);                    // vignette
-          gl_FragColor=vec4(col,1.0);
+          vec2 p=vUv-0.5; p.x*=uRes.x/uRes.y; p+=uMouse*0.045; p.y+=uScroll*0.12;
+          float r=length(p); float a=atan(p.y,p.x)+(0.52/(r+0.16))+uTime*0.055;
+          vec2 q=vec2(cos(a),sin(a))*r;
+          float n=fbm(q*2.4+uTime*0.035); n=fbm(q*3.25+n*1.5-uTime*0.02);
+          vec3 dark=vec3(0.012,0.027,0.043), deep=vec3(0.035,0.09,0.13), teal=vec3(0.31,0.76,0.84);
+          vec3 col=mix(dark,deep,smoothstep(.2,.86,n));
+          col=mix(col,teal,smoothstep(.58,.98,n)*.44);
+          col+=teal*pow(max(0.,1.-r*1.08),3.6)*.18;
+          col*=smoothstep(1.28,.12,r);
+          gl_FragColor=vec4(col,1.);
         }`;
-      const mat = new THREE.ShaderMaterial({ uniforms, vertexShader:`varying vec2 vUv; void main(){ vUv=uv; gl_Position=vec4(position.xy,0.0,1.0); }`, fragmentShader:frag });
+      const mat = new THREE.ShaderMaterial({ uniforms, vertexShader:`varying vec2 vUv; void main(){vUv=uv; gl_Position=vec4(position.xy,0.,1.);}`, fragmentShader:frag });
       scene.add(new THREE.Mesh(new THREE.PlaneGeometry(2,2), mat));
       const resize=()=>{ const w=innerWidth,h=innerHeight; renderer.setSize(w,h); uniforms.uRes.value.set(w,h); };
       resize(); addEventListener('resize',resize);
       let mx=0,my=0; addEventListener('mousemove',e=>{ mx=(e.clientX/innerWidth)*2-1; my=-((e.clientY/innerHeight)*2-1); });
       addEventListener('scroll',()=>{ const m=document.documentElement.scrollHeight-innerHeight; uniforms.uScroll.value=m>0?scrollY/m:0; },{passive:true});
       const start=performance.now();
-      (function loop(){ uniforms.uTime.value=(performance.now()-start)/1000;
-        uniforms.uMouse.value.x+=(mx-uniforms.uMouse.value.x)*0.05; uniforms.uMouse.value.y+=(my-uniforms.uMouse.value.y)*0.05;
-        renderer.render(scene,camera); requestAnimationFrame(loop); })();
+      (function loop(){ uniforms.uTime.value=(performance.now()-start)/1000; uniforms.uMouse.value.x+=(mx-uniforms.uMouse.value.x)*.05; uniforms.uMouse.value.y+=(my-uniforms.uMouse.value.y)*.05; renderer.render(scene,camera); requestAnimationFrame(loop); })();
     })();
 
-    /* ---------- 3D can: 360° turntable (drag to spin) ---------- */
     (function(){
       const cv=document.getElementById('can3d'); if(!cv) return;
       const ctx=cv.getContext('2d');
       const FRAMES=[]; for(let f=1;f<=300;f+=3) FRAMES.push(f);
-      const imgs=new Array(FRAMES.length); let ready=0,idx=0,auto=true,drag=false,lastX=0,booted=false;
+      const imgs=new Array(FRAMES.length); let ready=0,idx=24,auto=true,drag=false,lastX=0,booted=false;
       const size=()=>{ const r=cv.getBoundingClientRect(),d=Math.min(devicePixelRatio||1,2); cv.width=Math.max(1,r.width*d|0); cv.height=Math.max(1,r.height*d|0); };
       const draw=()=>{ const im=imgs[((Math.round(idx)%FRAMES.length)+FRAMES.length)%FRAMES.length]; ctx.clearRect(0,0,cv.width,cv.height); if(!im)return; const s=Math.min(cv.width/im.width,cv.height/im.height),w=im.width*s,h=im.height*s; ctx.drawImage(im,(cv.width-w)/2,(cv.height-h)/2,w,h); };
-      const loop=()=>{ if(auto&&!drag&&ready>6) idx+=0.4; draw(); requestAnimationFrame(loop); };
+      const loop=()=>{ if(auto&&!drag&&ready>6) idx+=0.33; draw(); requestAnimationFrame(loop); };
       const boot=()=>{ if(booted)return; booted=true; size(); FRAMES.forEach((fn,k)=>{ const im=new Image(); im.onload=()=>{imgs[k]=im;ready++;}; im.src='frames/frame_'+String(fn).padStart(4,'0')+'.jpg'; }); requestAnimationFrame(loop); };
       cv.addEventListener('pointerdown',e=>{drag=true;auto=false;lastX=e.clientX;try{cv.setPointerCapture(e.pointerId)}catch(_){}});
-      cv.addEventListener('pointermove',e=>{ if(!drag)return; idx-=(e.clientX-lastX)*0.25; lastX=e.clientX; });
-      const rel=()=>{drag=false;setTimeout(()=>auto=true,2500)}; cv.addEventListener('pointerup',rel); cv.addEventListener('pointercancel',rel);
+      cv.addEventListener('pointermove',e=>{ if(!drag)return; idx-=(e.clientX-lastX)*.25; lastX=e.clientX; });
+      const rel=()=>{drag=false;setTimeout(()=>auto=true,2200)}; cv.addEventListener('pointerup',rel); cv.addEventListener('pointercancel',rel);
       addEventListener('resize',()=>{ if(booted){size();draw();} });
       new IntersectionObserver((es,o)=>{ es.forEach(en=>{ if(en.isIntersecting){boot();o.disconnect();} }); },{threshold:.1}).observe(cv);
     })();
 
-    /* ---------- UI motion (reveals, counters, qty, faq, nav) ---------- */
     const nav=document.getElementById('nav');
-    const onScroll=()=>nav.classList.toggle('scrolled',scrollY>40); addEventListener('scroll',onScroll,{passive:true}); onScroll();
-
-    const io=new IntersectionObserver((es)=>{ es.forEach(e=>{ if(!e.isIntersecting)return;
-      const sibs=Array.from(e.target.parentElement.querySelectorAll(':scope > .reveal'));
-      e.target.style.transitionDelay=(Math.max(0,sibs.indexOf(e.target))*80)+'ms';
-      e.target.classList.add('in'); io.unobserve(e.target); }); },{threshold:.14,rootMargin:'0px 0px -8% 0px'});
+    const onScroll=()=>nav.classList.toggle('scrolled',scrollY>30); addEventListener('scroll',onScroll,{passive:true}); onScroll();
+    const io=new IntersectionObserver((es)=>{ es.forEach(e=>{ if(!e.isIntersecting)return; e.target.classList.add('in'); io.unobserve(e.target); }); },{threshold:.14,rootMargin:'0px 0px -8% 0px'});
     document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
-
-    const cio=new IntersectionObserver((es)=>{ es.forEach(e=>{ if(!e.isIntersecting)return; const el=e.target,to=parseFloat(el.dataset.to),dec=+(el.dataset.dec||0),t0=performance.now();
-      const tk=t=>{ const k=Math.min((t-t0)/1400,1),v=to*(1-Math.pow(1-k,3)); el.textContent=dec?(v/Math.pow(10,dec)).toFixed(dec):Math.round(v); if(k<1)requestAnimationFrame(tk); }; requestAnimationFrame(tk); cio.unobserve(el); }); },{threshold:.6});
-    document.querySelectorAll('.num').forEach(el=>cio.observe(el));
-
     const bio=new IntersectionObserver((es)=>{ es.forEach(e=>{ if(e.isIntersecting){ e.target.style.width=e.target.dataset.w+'%'; bio.unobserve(e.target);} }); },{threshold:.5});
-    document.querySelectorAll('.bar .fill').forEach(el=>bio.observe(el));
-
+    document.querySelectorAll('.fill').forEach(el=>bio.observe(el));
     let q=1; const qv=document.getElementById('qval');
     document.getElementById('qplus').onclick=()=>{ q=Math.min(5,q+1); qv.textContent=q; };
     document.getElementById('qminus').onclick=()=>{ q=Math.max(1,q-1); qv.textContent=q; };
-    const flash=(el,txt)=>{ const o=el.textContent; el.textContent=txt; el.style.transform='scale(1.05)'; setTimeout(()=>{el.textContent=o;el.style.transform='';},1400); };
-    document.getElementById('addcart').addEventListener('click',e=>{e.preventDefault();flash(e.target,'Added ✓ ('+q+')');});
-    document.getElementById('buynow').addEventListener('click',e=>{e.preventDefault();flash(e.target,'Demo — no checkout');});
-
+    const flash=(el,txt)=>{ const o=el.textContent; el.textContent=txt; setTimeout(()=>{el.textContent=o;},1300); };
+    document.getElementById('addcart').addEventListener('click',e=>{e.preventDefault();flash(e.currentTarget,'Added ('+q+')');});
+    document.getElementById('buynow').addEventListener('click',e=>{e.preventDefault();flash(e.currentTarget,'Demo only');});
     document.querySelectorAll('.faq-q').forEach(qq=>qq.addEventListener('click',()=>{ const it=qq.parentElement,a=it.querySelector('.faq-a'),open=it.classList.toggle('open'); a.style.maxHeight=open?a.scrollHeight+'px':'0'; }));
   </script>
 </body>

@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+<link rel="icon" href="data:," />
+<title>VORTEX Original - React Motion Shop</title>
+<style>
+  @font-face { font-family:'Bebas Neue'; src:url('fonts/bebas-neue-400.woff2') format('woff2'); font-weight:400; font-display:swap; }
+  @font-face { font-family:'Space Grotesk'; src:url('fonts/space-grotesk-variable.woff2') format('woff2'); font-weight:300 700; font-display:swap; }
+  @font-face { font-family:'Space Mono'; src:url('fonts/space-mono-400.woff2') format('woff2'); font-weight:400; font-display:swap; }
+  @font-face { font-family:'Space Mono'; src:url('fonts/space-mono-700.woff2') format('woff2'); font-weight:700; font-display:swap; }
+  :root{
+    --bg:#f5f7f8; --ink:#071018; --muted:rgba(7,16,24,.66); --soft:rgba(7,16,24,.46);
+    --dark:#03070b; --dark-2:#071018; --accent:#4fc3d6; --amber:#f4a942; --good:#16864a;
+    --line:rgba(7,16,24,.12); --line-dark:rgba(238,244,248,.16); --shadow:0 24px 70px rgba(7,16,24,.16);
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth;background:var(--bg)}
+  body{font-family:'Space Grotesk',system-ui,sans-serif;background:var(--bg);color:var(--ink);-webkit-font-smoothing:antialiased;overflow-x:hidden}
+  a{color:inherit;text-decoration:none}
+  button{font:inherit}
+  .page{min-height:100vh}
+  .wrap{width:100%;max-width:1220px;margin:0 auto;padding:0 24px}
+  .title{font-family:'Bebas Neue',sans-serif;font-weight:400;letter-spacing:.035em;text-transform:uppercase;line-height:.9}
+  .eyebrow{display:inline-flex;align-items:center;gap:.7rem;font-family:'Space Mono',monospace;font-weight:700;font-size:.66rem;letter-spacing:.22em;text-transform:uppercase;color:#087c91}
+  .eyebrow::before{content:"";width:30px;height:1px;background:#087c91}
+  .btn{display:inline-flex;align-items:center;justify-content:center;min-height:48px;border-radius:999px;border:1px solid transparent;padding:.88rem 1.35rem;font-family:'Space Mono',monospace;font-weight:700;font-size:.7rem;letter-spacing:.13em;text-transform:uppercase;cursor:pointer;transition:transform .25s,box-shadow .25s,background .25s}
+  .btn:hover{transform:translateY(-2px)}
+  .btn-primary{background:var(--ink);color:white;box-shadow:0 16px 34px rgba(7,16,24,.18)}
+  .btn-teal{background:var(--accent);color:#021017;box-shadow:0 16px 36px rgba(79,195,214,.32)}
+  .btn-amber{background:var(--amber);color:#241403;box-shadow:0 16px 36px rgba(244,169,66,.26)}
+  .btn-ghost{border-color:var(--line);background:rgba(255,255,255,.7)}
+  nav{position:fixed;top:0;left:0;right:0;z-index:50;background:rgba(245,247,248,.76);backdrop-filter:blur(18px);border-bottom:1px solid rgba(7,16,24,.08)}
+  nav .wrap{height:72px;display:flex;align-items:center;justify-content:space-between;gap:1rem}
+  .logo{font-family:'Bebas Neue',sans-serif;font-size:1.8rem;letter-spacing:.2em}
+  .nav-links{display:flex;align-items:center;gap:1.25rem;color:var(--muted);font-size:.84rem}
+  .nav-links a:hover{color:var(--ink)}
+  .nav-links .btn{min-height:38px;padding:.58rem 1.05rem;font-size:.62rem}
+  .switcher{position:fixed;left:50%;bottom:18px;z-index:60;display:flex;gap:.35rem;padding:.36rem;border:1px solid rgba(7,16,24,.12);border-radius:999px;background:rgba(245,247,248,.84);backdrop-filter:blur(16px);transform:translateX(-50%);box-shadow:var(--shadow)}
+  .switcher a{border-radius:999px;padding:.55rem .82rem;font-family:'Space Mono',monospace;font-size:.57rem;letter-spacing:.11em;text-transform:uppercase;color:var(--muted);white-space:nowrap}
+  .switcher a.active{background:var(--ink);color:white}
+
+  .hero{position:relative;min-height:100vh;padding:116px 0 70px;display:grid;align-items:center;overflow:hidden;background:
+    radial-gradient(70% 64% at 56% 42%,rgba(79,195,214,.18),transparent 58%),
+    linear-gradient(180deg,#ffffff 0%,#f4f7f8 64%,#e9eff1 100%)}
+  .hero::before{content:"";position:absolute;inset:auto -10% -35% -10%;height:58%;background:radial-gradient(50% 50% at 50% 40%,rgba(79,195,214,.34),transparent 70%);filter:blur(20px);pointer-events:none}
+  .hero-grid{position:relative;z-index:1;display:grid;grid-template-columns:.9fr 1.1fr;gap:clamp(2rem,4vw,4.8rem);align-items:center}
+  .hero-copy h1{font-size:clamp(4.2rem,9vw,9rem);margin:.8rem 0 1rem}
+  .subhead{max-width:33rem;color:var(--muted);font-size:clamp(1rem,1.55vw,1.2rem);line-height:1.58}
+  .hero-actions{display:flex;gap:.8rem;flex-wrap:wrap;margin-top:1.45rem}
+  .motion-stage{position:relative;min-height:620px;display:grid;place-items:center}
+  .orb{position:absolute;width:74%;aspect-ratio:1;border-radius:50%;background:radial-gradient(circle,rgba(79,195,214,.38),rgba(79,195,214,.08) 46%,transparent 70%);filter:blur(14px)}
+  .can-frame{position:relative;width:min(100%,590px);border-radius:36px;padding:24px;background:linear-gradient(180deg,rgba(255,255,255,.82),rgba(255,255,255,.36));border:1px solid rgba(7,16,24,.09);box-shadow:var(--shadow);overflow:hidden}
+  .can-frame img{width:100%;display:block;aspect-ratio:880/720;object-fit:contain;filter:drop-shadow(0 32px 50px rgba(7,16,24,.18))}
+  .can-caption{display:flex;justify-content:space-between;gap:1rem;margin-top:.9rem;font-family:'Space Mono',monospace;font-size:.62rem;letter-spacing:.12em;text-transform:uppercase;color:var(--soft)}
+  .dark-band{background:var(--dark);color:#eef4f8;position:relative;overflow:hidden}
+  .dark-band::before{content:"";position:absolute;inset:0;background:radial-gradient(70% 42% at 50% 0%,rgba(79,195,214,.16),transparent 68%);pointer-events:none}
+  .stats{position:relative;z-index:1;display:grid;grid-template-columns:repeat(4,1fr);gap:1px;border-top:1px solid var(--line-dark);border-bottom:1px solid var(--line-dark)}
+  .stat{padding:1.5rem;text-align:center;border-left:1px solid var(--line-dark)}
+  .stat:first-child{border-left:0}
+  .stat b{display:block;font-family:'Bebas Neue',sans-serif;font-size:3.1rem;letter-spacing:.04em;color:var(--accent);line-height:.85}
+  .stat span{font-family:'Space Mono',monospace;font-size:.62rem;letter-spacing:.14em;text-transform:uppercase;color:rgba(238,244,248,.62)}
+  .section{padding:clamp(76px,12vh,136px) 0}
+  .section-head{text-align:center;max-width:760px;margin:0 auto 56px}
+  .section-head h2{font-size:clamp(3rem,7vw,6.4rem);margin-top:1rem}
+  .pin{min-height:130vh;display:grid;align-items:start}
+  .pin-inner{position:sticky;top:84px;display:grid;grid-template-columns:1fr 1fr;gap:clamp(2rem,5vw,5rem);align-items:center;padding:44px 0}
+  .pin h2{font-size:clamp(3.8rem,8vw,8rem)}
+  .pin p{margin-top:1rem;max-width:31rem;color:rgba(238,244,248,.68);font-size:1.1rem;line-height:1.65}
+  .pin-product{position:relative;min-height:540px;display:grid;place-items:center}
+  .pin-product img{position:relative;z-index:1;width:min(100%,520px);aspect-ratio:880/720;object-fit:contain;filter:drop-shadow(0 34px 70px rgba(0,0,0,.5))}
+  .pin-vortex{position:absolute;width:80%;aspect-ratio:1;border-radius:50%;background:conic-gradient(from 40deg,transparent,rgba(79,195,214,.7),transparent,rgba(255,255,255,.52),transparent);filter:blur(18px);opacity:.66}
+  .features{display:grid;gap:1.2rem}
+  .feature-card{display:grid;grid-template-columns:.9fr 1.1fr;gap:2rem;align-items:center;min-height:420px;padding:clamp(1rem,2.6vw,2rem);border:1px solid var(--line);border-radius:32px;background:white;box-shadow:var(--shadow);overflow:hidden}
+  .feature-card:nth-child(even){grid-template-columns:1.1fr .9fr}
+  .feature-card:nth-child(even) .feature-copy{order:2}
+  .feature-copy h3{font-size:clamp(3rem,6vw,5.5rem)}
+  .feature-copy p{max-width:30rem;margin-top:.8rem;color:var(--muted);font-size:1.03rem;line-height:1.62}
+  .feature-card img{width:100%;height:380px;object-fit:cover;border-radius:24px}
+  .commerce{display:grid;grid-template-columns:1fr 420px;gap:clamp(1.5rem,4vw,4rem);align-items:start}
+  .commerce h2{font-size:clamp(3.7rem,8vw,7.6rem)}
+  .reviews{display:grid;grid-template-columns:repeat(3,1fr);gap:1rem;margin-top:2rem}
+  .review{border:1px solid var(--line);border-radius:22px;padding:1.2rem;background:white}
+  .review .stars{color:var(--amber);letter-spacing:.08em}
+  .review h4{margin:.55rem 0 .35rem;font-size:1.02rem}
+  .review p{color:var(--muted);line-height:1.55;font-size:.94rem}
+  .buy-box{position:sticky;top:100px;border:1px solid var(--line);border-radius:28px;padding:1.3rem;background:white;box-shadow:var(--shadow)}
+  .price-line{display:flex;align-items:flex-end;gap:.6rem;flex-wrap:wrap}
+  .price{font-family:'Bebas Neue',sans-serif;font-size:3.35rem;line-height:.9}
+  .was{text-decoration:line-through;color:var(--soft)}
+  .per{font-family:'Space Mono',monospace;font-size:.64rem;letter-spacing:.09em;color:var(--muted)}
+  .stock{margin-top:.9rem;color:var(--good);font-weight:700}
+  .delivery{margin-top:.3rem;color:var(--muted);line-height:1.55;font-size:.92rem}
+  .delivery b{color:var(--ink)}
+  .qty-row{display:flex;align-items:center;justify-content:space-between;gap:1rem;margin:1.1rem 0}
+  .qty{display:inline-flex;align-items:center;border:1px solid var(--line);border-radius:999px;overflow:hidden}
+  .qty button{width:40px;height:40px;border:0;background:white;cursor:pointer}
+  .qty button:hover{background:#eef4f8}
+  .qty span{min-width:34px;text-align:center;font-family:'Space Mono',monospace}
+  .pack-note{text-align:right;color:var(--muted);font-size:.9rem}
+  .buy-actions{display:grid;grid-template-columns:1fr 1fr;gap:.7rem}
+  .secure{margin-top:.9rem;color:var(--muted);font-family:'Space Mono',monospace;font-size:.58rem;letter-spacing:.1em;text-transform:uppercase}
+  footer{padding:44px 0 86px;border-top:1px solid var(--line);color:var(--muted)}
+  footer .wrap{display:flex;align-items:center;justify-content:space-between;gap:1rem;flex-wrap:wrap}
+  footer a{margin-left:1rem;color:var(--muted)}
+  footer a:hover{color:var(--ink)}
+
+  @media(max-width:940px){
+    .hero-grid,.pin-inner,.feature-card,.feature-card:nth-child(even),.commerce{grid-template-columns:1fr}
+    .hero-copy{text-align:center;order:2}
+    .hero-actions,.hero-copy .eyebrow{justify-content:center}
+    .subhead{margin-inline:auto}
+    .motion-stage{min-height:460px}
+    .pin-inner{position:relative;top:auto;text-align:center}
+    .pin p{margin-inline:auto}
+    .feature-card:nth-child(even) .feature-copy{order:0}
+    .reviews{grid-template-columns:1fr}
+    .buy-box{position:relative;top:auto}
+  }
+  @media(max-width:680px){
+    .wrap{padding:0 20px}
+    .nav-links a:not(.btn){display:none}
+    .hero{padding-top:152px}
+    .hero-copy h1{font-size:clamp(3.5rem,16vw,5.7rem)}
+    .motion-stage{min-height:350px}
+    .can-frame{padding:12px;border-radius:24px}
+    .stats{grid-template-columns:repeat(2,1fr)}
+    .stat:nth-child(3){border-left:0;border-top:1px solid var(--line-dark)}
+    .stat:nth-child(4){border-top:1px solid var(--line-dark)}
+    .pin-product{min-height:360px}
+    .feature-card img{height:270px}
+    .buy-actions{grid-template-columns:1fr}
+    .switcher{top:84px;bottom:auto;max-width:calc(100vw - 24px);overflow:auto}
+    .switcher a{font-size:.52rem;padding:.5rem .62rem}
+  }
+</style>
+</head>
+<body>
+<div id="root"></div>
+<script type="importmap">
+{
+  "imports": {
+    "react": "https://esm.sh/react@18.2.0",
+    "react-dom/client": "https://esm.sh/react-dom@18.2.0/client",
+    "framer-motion": "https://esm.sh/framer-motion@10.16.16?external=react,react-dom"
+  }
+}
+</script>
+<script type="module">
+  import React, { useEffect, useState } from 'react';
+  import { createRoot } from 'react-dom/client';
+  import { motion, useScroll, useTransform } from 'framer-motion';
+
+  const h = React.createElement;
+  const ease = [0.2, 0.7, 0.2, 1];
+  const frame = (n) => 'frames/frame_' + String(Math.max(1, Math.min(477, n))).padStart(4, '0') + '.jpg';
+  const reveal = {
+    initial: { opacity: 0, y: 28 },
+    whileInView: { opacity: 1, y: 0 },
+    viewport: { once: true, amount: 0.22 },
+    transition: { duration: 0.72, ease }
+  };
+
+  function Nav(){
+    return h(React.Fragment, null,
+      h('nav', null, h('div', { className:'wrap' },
+        h('a', { className:'logo', href:'#top' }, 'VORTEX'),
+        h('div', { className:'nav-links' },
+          h('a', { href:'#motion' }, 'Motion'),
+          h('a', { href:'#reviews' }, 'Reviews'),
+          h('a', { href:'index.html' }, 'The film'),
+          h('a', { className:'btn btn-primary', href:'#buy' }, 'Buy')
+        )
+      )),
+      h('div', { className:'switcher', 'aria-label':'Shop comparison pages' },
+        h('a', { href:'shop.html' }, 'Static upgrade'),
+        h('a', { className:'active', href:'shop-react.html' }, 'React motion'),
+        h('a', { href:'shop-original.html' }, 'Original')
+      )
+    );
+  }
+
+  function ProductHero(){
+    const [src, setSrc] = useState(frame(70));
+    useEffect(() => {
+      let i = 70;
+      const id = setInterval(() => { i = i >= 260 ? 70 : i + 3; setSrc(frame(i)); }, 95);
+      return () => clearInterval(id);
+    }, []);
+    return h('section', { className:'hero', id:'top' }, h('div', { className:'wrap hero-grid' },
+      h(motion.div, { className:'hero-copy', ...reveal },
+        h('span', { className:'eyebrow' }, 'React + Framer Motion'),
+        h(motion.h1, { className:'title', initial:{opacity:0,y:24}, animate:{opacity:1,y:0}, transition:{duration:.8,ease} }, 'Original, made cinematic.'),
+        h('p', { className:'subhead' }, 'A premium commerce take on VORTEX Original: one flavor, zero sugar, 200 mg caffeine, and motion that feels closer to a product launch than a checkout form.'),
+        h('div', { className:'hero-actions' },
+          h('a', { className:'btn btn-primary', href:'#buy' }, 'Buy VORTEX Original'),
+          h('a', { className:'btn btn-ghost', href:'shop.html' }, 'Compare static')
+        )
+      ),
+      h(motion.div, { className:'motion-stage', initial:{opacity:0,scale:.96}, animate:{opacity:1,scale:1}, transition:{duration:.9,ease} },
+        h(motion.div, { className:'orb', animate:{rotate:360,scale:[1,1.06,1]}, transition:{rotate:{duration:20,repeat:Infinity,ease:'linear'},scale:{duration:5,repeat:Infinity,ease:'easeInOut'}} }),
+        h(motion.div, { className:'can-frame', whileHover:{y:-8,rotate:-1}, transition:{type:'spring',stiffness:140,damping:18} },
+          h('img', { src, alt:'VORTEX Original rotating can' }),
+          h('div', { className:'can-caption' }, h('span', null, 'Animated frame sequence'), h('span', null, 'VORTEX Original'))
+        )
+      )
+    ));
+  }
+
+  function Stats(){
+    return h('div', { className:'dark-band' }, h('div', { className:'wrap stats' },
+      [['200','mg caffeine'],['0','g sugar'],['16','fl oz'],['1','original flavor']].map((s) =>
+        h(motion.div, { className:'stat', key:s[1], ...reveal }, h('b', null, s[0]), h('span', null, s[1]))
+      )
+    ));
+  }
+
+  function MotionMoment(){
+    const { scrollYProgress } = useScroll();
+    const rotate = useTransform(scrollYProgress, [0, 1], [0, 28]);
+    const scale = useTransform(scrollYProgress, [0, .55, 1], [1, 1.06, 1]);
+    const [src, setSrc] = useState(frame(92));
+    useEffect(() => scrollYProgress.on('change', (v) => setSrc(frame(92 + Math.round(v * 210)))), [scrollYProgress]);
+    return h('section', { className:'dark-band section pin', id:'motion' }, h('div', { className:'wrap pin-inner' },
+      h(motion.div, { ...reveal },
+        h('span', { className:'eyebrow' }, 'Scroll-scrubbed product'),
+        h('h2', { className:'title' }, 'The can keeps moving with you.'),
+        h('p', null, 'Framer Motion ties the product frame and vortex field to scroll so the page feels more like a launch film while still ending in a clear purchase box.')
+      ),
+      h('div', { className:'pin-product' },
+        h(motion.div, { className:'pin-vortex', style:{ rotate, scale } }),
+        h(motion.img, { src, alt:'Scroll animated VORTEX Original can', style:{ rotate, scale } })
+      )
+    ));
+  }
+
+  function Features(){
+    const cards = [
+      ['Razor focus', 'A 200 mg caffeine profile for getting locked in without turning the page into fake science claims.', 'frames/frame_0188.jpg', 'VORTEX Original can detail'],
+      ['Zero sugar', 'Cold, crisp, and direct. The original flavor keeps the shop focused on one buy decision.', 'ocean/ocean_0068.jpg', 'Ocean vortex texture'],
+      ['A cleaner sell', 'Apple-style motion and spacing up front, Amazon-style product details when it is time to buy.', 'man/man_0068.jpg', 'Person drinking VORTEX Original']
+    ];
+    return h('section', { className:'section' }, h('div', { className:'wrap' },
+      h('div', { className:'section-head' }, h('span', { className:'eyebrow' }, 'Feature beats'), h('h2', { className:'title' }, 'One claim at a time.')),
+      h('div', { className:'features' }, cards.map((c) =>
+        h(motion.article, { className:'feature-card', key:c[0], ...reveal },
+          h('div', { className:'feature-copy' }, h('h3', { className:'title' }, c[0]), h('p', null, c[1])),
+          h('img', { src:c[2], alt:c[3] })
+        )
+      ))
+    ));
+  }
+
+  function BuyBox(){
+    const [qty, setQty] = useState(1);
+    const [cart, setCart] = useState('Add to Cart');
+    const [buy, setBuy] = useState('Buy Now');
+    const flash = (setter, text, original) => { setter(text); setTimeout(() => setter(original), 1300); };
+    return h(motion.aside, { className:'buy-box', id:'buy', ...reveal },
+      h('div', { className:'price-line' }, h('span', { className:'price' }, '$29.99'), h('span', { className:'was' }, '$35.99'), h('span', { className:'per' }, '$2.50 / can')),
+      h('div', { className:'stock' }, 'In stock'),
+      h('div', { className:'delivery' }, 'FREE delivery ', h('b', null, 'Tue, Jun 24'), '. Order within ', h('b', null, '8 hrs'), ' for fastest arrival.'),
+      h('div', { className:'qty-row' },
+        h('div', { className:'qty' },
+          h('button', { 'aria-label':'Decrease quantity', onClick:() => setQty(Math.max(1, qty - 1)) }, '-'),
+          h('span', null, qty),
+          h('button', { 'aria-label':'Increase quantity', onClick:() => setQty(Math.min(5, qty + 1)) }, '+')
+        ),
+        h('div', { className:'pack-note' }, '12-pack', h('br'), 'VORTEX Original')
+      ),
+      h('div', { className:'buy-actions' },
+        h('button', { className:'btn btn-amber', onClick:() => flash(setCart, 'Added (' + qty + ')', 'Add to Cart') }, cart),
+        h('button', { className:'btn btn-teal', onClick:() => flash(setBuy, 'Demo only', 'Buy Now') }, buy)
+      ),
+      h('div', { className:'secure' }, 'Secure demo transaction'),
+      h('div', { className:'delivery' }, 'Ships from and sold by ', h('b', null, 'VORTEX'), '. 30-day focus-back guarantee.')
+    );
+  }
+
+  function Commerce(){
+    const reviews = [
+      ['First energy drink that feels calm.', 'It hits quickly without making me scattered. Original is the only flavor I need.'],
+      ['Clean taste, no sugar crash.', 'Cold, sharp, and not too sweet. The 12-pack format makes sense.'],
+      ['My deep-work can.', 'I open one before design sessions. The focus feels steady and the page feels premium.']
+    ];
+    return h('section', { className:'section', id:'reviews' }, h('div', { className:'wrap commerce' },
+      h('div', null,
+        h(motion.div, { ...reveal }, h('span', { className:'eyebrow' }, 'Commerce proof'), h('h2', { className:'title' }, 'Amazon clarity. Apple polish.'), h('p', { className:'subhead' }, 'The React version is intentionally more animated. The static version is intentionally more direct. Both sell the same single flavor.')),
+        h('div', { className:'reviews' }, reviews.map((r) =>
+          h(motion.div, { className:'review', key:r[0], ...reveal },
+            h('div', { className:'stars' }, '\u2605\u2605\u2605\u2605\u2605'),
+            h('h4', null, r[0]),
+            h('p', null, r[1])
+          )
+        ))
+      ),
+      h(BuyBox)
+    ));
+  }
+
+  function App(){
+    return h('div', { className:'page' },
+      h(Nav),
+      h(ProductHero),
+      h(Stats),
+      h(MotionMoment),
+      h(Features),
+      h(Commerce),
+      h('footer', null, h('div', { className:'wrap' }, h('span', { className:'logo' }, 'VORTEX'), h('div', null, h('span', null, 'React + Framer Motion comparison'), h('a', { href:'shop.html' }, 'Static version'), h('a', { href:'shop-original.html' }, 'Original'), h('a', { href:'#top' }, 'Top'))))
+    );
+  }
+
+  createRoot(document.getElementById('root')).render(h(App));
+</script>
+</body>
+</html>
