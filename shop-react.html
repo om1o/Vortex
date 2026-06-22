@@ -240,7 +240,7 @@
     const cards = [
       ['Razor focus', 'A 200 mg caffeine profile for getting locked in without turning the page into fake science claims.', 'frames/frame_0188.jpg', 'VORTEX Original can detail'],
       ['Zero sugar', 'Cold, crisp, and direct. The original flavor keeps the shop focused on one buy decision.', 'ocean/ocean_0068.jpg', 'Ocean vortex texture'],
-      ['A cleaner sell', 'Apple-style motion and spacing up front, Amazon-style product details when it is time to buy.', 'man/man_0068.jpg', 'Person drinking VORTEX Original']
+      ['A cleaner sell', 'Cinematic motion up front, clear product details when it is time to buy.', 'man/man_0068.jpg', 'Person drinking VORTEX Original']
     ];
     return h('section', { className:'section' }, h('div', { className:'wrap' },
       h('div', { className:'section-head' }, h('span', { className:'eyebrow' }, 'Feature beats'), h('h2', { className:'title' }, 'One claim at a time.')),
@@ -287,7 +287,7 @@
     ];
     return h('section', { className:'section', id:'reviews' }, h('div', { className:'wrap commerce' },
       h('div', null,
-        h(motion.div, { ...reveal }, h('span', { className:'eyebrow' }, 'Commerce proof'), h('h2', { className:'title' }, 'Amazon clarity. Apple polish.'), h('p', { className:'subhead' }, 'The React version is intentionally more animated. The static version is intentionally more direct. Both sell the same single flavor.')),
+        h(motion.div, { ...reveal }, h('span', { className:'eyebrow' }, 'VORTEX proof'), h('h2', { className:'title' }, 'Clear energy. Clean checkout.'), h('p', { className:'subhead' }, 'The page stays focused on VORTEX Original: one flavor, one pack, one clear path to buy.')),
         h('div', { className:'reviews' }, reviews.map((r) =>
           h(motion.div, { className:'review', key:r[0], ...reveal },
             h('div', { className:'stars' }, '\u2605\u2605\u2605\u2605\u2605'),

@@ -5,352 +5,357 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
 <link rel="icon" href="data:," />
-<title>VORTEX Original - Premium Shop</title>
+<title>VORTEX Original - Shop</title>
 <style>
   @font-face { font-family:'Bebas Neue'; src:url('fonts/bebas-neue-400.woff2') format('woff2'); font-weight:400; font-display:swap; }
   @font-face { font-family:'Space Grotesk'; src:url('fonts/space-grotesk-variable.woff2') format('woff2'); font-weight:300 700; font-display:swap; }
   @font-face { font-family:'Space Mono'; src:url('fonts/space-mono-400.woff2') format('woff2'); font-weight:400; font-display:swap; }
   @font-face { font-family:'Space Mono'; src:url('fonts/space-mono-700.woff2') format('woff2'); font-weight:700; font-display:swap; }
-
   :root{
-    --bg:#03070b; --panel:#071018; --panel-2:#0c1620; --ink:#eef4f8; --muted:rgba(238,244,248,.66);
-    --soft:rgba(238,244,248,.42); --accent:#4fc3d6; --accent-2:#b8f4ff; --amber:#ffb454; --good:#6be192;
-    --line:rgba(238,244,248,.13); --line-strong:rgba(238,244,248,.24);
-    --shadow:0 26px 80px rgba(0,0,0,.52); --smooth:cubic-bezier(.2,.7,.2,1); --spring:cubic-bezier(.34,1.56,.64,1);
+    --bg:#f5f7f8; --ink:#071018; --muted:rgba(7,16,24,.66); --soft:rgba(7,16,24,.46);
+    --dark:#03070b; --dark-2:#071018; --accent:#4fc3d6; --amber:#f4a942; --good:#16864a;
+    --line:rgba(7,16,24,.12); --line-dark:rgba(238,244,248,.16); --shadow:0 24px 70px rgba(7,16,24,.16);
   }
   *{box-sizing:border-box;margin:0;padding:0}
   html{scroll-behavior:smooth;background:var(--bg)}
-  body{font-family:'Space Grotesk',system-ui,sans-serif;color:var(--ink);background:var(--bg);-webkit-font-smoothing:antialiased;overflow-x:hidden}
+  body{font-family:'Space Grotesk',system-ui,sans-serif;background:var(--bg);color:var(--ink);-webkit-font-smoothing:antialiased;overflow-x:hidden}
   a{color:inherit;text-decoration:none}
   button{font:inherit}
-  #bg{position:fixed;inset:0;z-index:0;display:block;width:100%;height:100%}
-  .scrim{position:fixed;inset:0;z-index:1;pointer-events:none;background:
-    radial-gradient(70% 55% at 52% 14%,rgba(79,195,214,.16),transparent 62%),
-    linear-gradient(180deg,rgba(3,7,11,.08),rgba(3,7,11,.78) 72%,#03070b)}
-  .page{position:relative;z-index:2}
-  .wrap{width:100%;max-width:1200px;margin:0 auto;padding:0 24px}
-  .eyebrow{display:inline-flex;align-items:center;gap:.75rem;font-family:'Space Mono',monospace;font-weight:700;font-size:.68rem;letter-spacing:.24em;text-transform:uppercase;color:var(--accent)}
-  .eyebrow::before{content:"";width:32px;height:1px;background:var(--accent);box-shadow:0 0 18px rgba(79,195,214,.85)}
+  .page{min-height:100vh}
+  .wrap{width:100%;max-width:1220px;margin:0 auto;padding:0 24px}
   .title{font-family:'Bebas Neue',sans-serif;font-weight:400;letter-spacing:.035em;text-transform:uppercase;line-height:.9}
-  .btn{display:inline-flex;align-items:center;justify-content:center;min-height:48px;border-radius:999px;border:1px solid transparent;padding:.9rem 1.45rem;font-family:'Space Mono',monospace;font-weight:700;font-size:.72rem;letter-spacing:.14em;text-transform:uppercase;cursor:pointer;transition:transform .35s var(--spring),box-shadow .3s,background .3s,border-color .3s,color .3s}
-  .btn:active{transform:scale(.97)}
-  .btn-primary{background:var(--accent);color:#021017;box-shadow:0 0 36px rgba(79,195,214,.28)}
-  .btn-primary:hover{transform:translateY(-2px);box-shadow:0 0 52px rgba(79,195,214,.42)}
-  .btn-amber{background:var(--amber);color:#241403;box-shadow:0 0 34px rgba(255,180,84,.22)}
-  .btn-amber:hover{transform:translateY(-2px);box-shadow:0 0 48px rgba(255,180,84,.34)}
-  .btn-ghost{border-color:var(--line-strong);color:var(--ink);background:rgba(255,255,255,.03)}
-  .btn-ghost:hover{border-color:var(--accent);color:var(--accent)}
-
-  nav{position:fixed;top:0;left:0;right:0;z-index:50;border-bottom:1px solid transparent;transition:background .35s,border-color .35s,backdrop-filter .35s}
-  nav.scrolled{background:rgba(3,7,11,.76);border-color:var(--line);backdrop-filter:blur(16px)}
+  .eyebrow{display:inline-flex;align-items:center;gap:.7rem;font-family:'Space Mono',monospace;font-weight:700;font-size:.66rem;letter-spacing:.22em;text-transform:uppercase;color:#087c91}
+  .eyebrow::before{content:"";width:30px;height:1px;background:#087c91}
+  .btn{display:inline-flex;align-items:center;justify-content:center;min-height:48px;border-radius:999px;border:1px solid transparent;padding:.88rem 1.35rem;font-family:'Space Mono',monospace;font-weight:700;font-size:.7rem;letter-spacing:.13em;text-transform:uppercase;cursor:pointer;transition:transform .25s,box-shadow .25s,background .25s}
+  .btn:hover{transform:translateY(-2px)}
+  .btn-primary{background:var(--ink);color:white;box-shadow:0 16px 34px rgba(7,16,24,.18)}
+  .btn-teal{background:var(--accent);color:#021017;box-shadow:0 16px 36px rgba(79,195,214,.32)}
+  .btn-amber{background:var(--amber);color:#241403;box-shadow:0 16px 36px rgba(244,169,66,.26)}
+  .btn-ghost{border-color:var(--line);background:rgba(255,255,255,.7)}
+  nav{position:fixed;top:0;left:0;right:0;z-index:50;background:rgba(245,247,248,.76);backdrop-filter:blur(18px);border-bottom:1px solid rgba(7,16,24,.08)}
   nav .wrap{height:72px;display:flex;align-items:center;justify-content:space-between;gap:1rem}
-  .logo{font-family:'Bebas Neue',sans-serif;font-size:1.75rem;letter-spacing:.2em}
-  .nav-links{display:flex;align-items:center;gap:1.35rem;font-size:.84rem;color:var(--muted)}
+  .logo{font-family:'Bebas Neue',sans-serif;font-size:1.8rem;letter-spacing:.2em}
+  .nav-links{display:flex;align-items:center;gap:1.25rem;color:var(--muted);font-size:.84rem}
   .nav-links a:hover{color:var(--ink)}
-  .nav-links .btn{min-height:38px;padding:.58rem 1.1rem;font-size:.64rem}
-  .switcher{position:fixed;left:50%;bottom:18px;z-index:60;display:flex;gap:.35rem;padding:.36rem;border:1px solid var(--line);border-radius:999px;background:rgba(3,7,11,.78);backdrop-filter:blur(14px);transform:translateX(-50%);box-shadow:var(--shadow)}
+  .nav-links .btn{min-height:38px;padding:.58rem 1.05rem;font-size:.62rem}
+  .switcher{position:fixed;left:50%;top:84px;z-index:60;display:flex;gap:.35rem;padding:.36rem;border:1px solid rgba(7,16,24,.12);border-radius:999px;background:rgba(245,247,248,.84);backdrop-filter:blur(16px);transform:translateX(-50%);box-shadow:var(--shadow)}
   .switcher a{border-radius:999px;padding:.55rem .82rem;font-family:'Space Mono',monospace;font-size:.57rem;letter-spacing:.11em;text-transform:uppercase;color:var(--muted);white-space:nowrap}
-  .switcher a.active{background:var(--ink);color:#03070b}
-  .switcher a:hover{color:var(--ink)}
+  .switcher a.active{background:var(--ink);color:white}
 
-  .hero{min-height:100vh;display:grid;align-items:center;padding:116px 0 58px}
-  .hero-grid{display:grid;grid-template-columns:minmax(0,1.05fr) minmax(360px,.95fr);gap:clamp(2rem,4vw,4.4rem);align-items:center}
-  .product-stage{position:relative;min-height:560px;display:grid;place-items:center}
-  .product-halo{position:absolute;inset:9% 2%;border-radius:46%;background:radial-gradient(circle at 50% 48%,rgba(79,195,214,.28),rgba(79,195,214,.08) 38%,transparent 68%);filter:blur(22px)}
-  .product-card{position:relative;width:min(100%,560px);padding:28px;border:1px solid var(--line);border-radius:30px;background:linear-gradient(180deg,rgba(238,244,248,.08),rgba(238,244,248,.02));box-shadow:var(--shadow);overflow:hidden}
-  .product-card::before{content:"";position:absolute;inset:0;background:linear-gradient(120deg,rgba(255,255,255,.14),transparent 34%,transparent 70%,rgba(79,195,214,.13));pointer-events:none}
-  #can3d{position:relative;z-index:1;width:100%;aspect-ratio:880/720;display:block;cursor:grab;touch-action:pan-y;filter:drop-shadow(0 34px 56px rgba(0,0,0,.5))}
-  #can3d:active{cursor:grabbing}
-  .spin-hint{position:relative;z-index:1;text-align:center;margin-top:12px;font-family:'Space Mono',monospace;font-size:.61rem;letter-spacing:.18em;text-transform:uppercase;color:var(--accent)}
-  .hero-copy h1{font-size:clamp(4rem,9vw,8.8rem);margin:.72rem 0 .75rem}
-  .subhead{max-width:34rem;color:var(--muted);font-size:clamp(1rem,1.7vw,1.22rem);line-height:1.55}
-  .rating-row{display:flex;align-items:center;gap:.72rem;margin:1.2rem 0;color:var(--muted);font-size:.9rem}
-  .stars{color:var(--amber);letter-spacing:.08em;white-space:nowrap}
-  .rating-row a{color:var(--accent)}
-  .buy-box{margin-top:1.1rem;border:1px solid var(--line-strong);border-radius:24px;padding:1.35rem;background:rgba(5,11,17,.78);box-shadow:var(--shadow);backdrop-filter:blur(12px)}
-  .price-line{display:flex;align-items:flex-end;gap:.62rem;flex-wrap:wrap}
+  .hero{position:relative;min-height:100vh;padding:116px 0 70px;display:grid;align-items:center;overflow:hidden;background:
+    radial-gradient(70% 64% at 56% 42%,rgba(79,195,214,.18),transparent 58%),
+    linear-gradient(180deg,#ffffff 0%,#f4f7f8 64%,#e9eff1 100%)}
+  .hero::before{content:"";position:absolute;inset:auto -10% -35% -10%;height:58%;background:radial-gradient(50% 50% at 50% 40%,rgba(79,195,214,.34),transparent 70%);filter:blur(20px);pointer-events:none}
+  .hero-grid{position:relative;z-index:1;display:grid;grid-template-columns:.9fr 1.1fr;gap:clamp(2rem,4vw,4.8rem);align-items:center}
+  .hero-copy h1{font-size:clamp(4.2rem,9vw,9rem);margin:.8rem 0 1rem}
+  .subhead{max-width:33rem;color:var(--muted);font-size:clamp(1rem,1.55vw,1.2rem);line-height:1.58}
+  .hero-actions{display:flex;gap:.8rem;flex-wrap:wrap;margin-top:1.45rem}
+  .motion-stage{position:relative;min-height:620px;display:grid;place-items:center}
+  .orb{position:absolute;width:74%;aspect-ratio:1;border-radius:50%;background:radial-gradient(circle,rgba(79,195,214,.38),rgba(79,195,214,.08) 46%,transparent 70%);filter:blur(14px)}
+  .can-frame{position:relative;width:min(100%,590px);border-radius:36px;padding:24px;background:linear-gradient(180deg,rgba(255,255,255,.82),rgba(255,255,255,.36));border:1px solid rgba(7,16,24,.09);box-shadow:var(--shadow);overflow:hidden}
+  .can-frame img{width:100%;display:block;aspect-ratio:880/720;object-fit:contain;filter:drop-shadow(0 32px 50px rgba(7,16,24,.18))}
+  .can-caption{display:flex;justify-content:space-between;gap:1rem;margin-top:.9rem;font-family:'Space Mono',monospace;font-size:.62rem;letter-spacing:.12em;text-transform:uppercase;color:var(--soft)}
+  .dark-band{background:var(--dark);color:#eef4f8;position:relative;overflow:hidden}
+  .dark-band::before{content:"";position:absolute;inset:0;background:radial-gradient(70% 42% at 50% 0%,rgba(79,195,214,.16),transparent 68%);pointer-events:none}
+  .stats{position:relative;z-index:1;display:grid;grid-template-columns:repeat(4,1fr);gap:1px;border-top:1px solid var(--line-dark);border-bottom:1px solid var(--line-dark)}
+  .stat{padding:1.5rem;text-align:center;border-left:1px solid var(--line-dark)}
+  .stat:first-child{border-left:0}
+  .stat b{display:block;font-family:'Bebas Neue',sans-serif;font-size:3.1rem;letter-spacing:.04em;color:var(--accent);line-height:.85}
+  .stat span{font-family:'Space Mono',monospace;font-size:.62rem;letter-spacing:.14em;text-transform:uppercase;color:rgba(238,244,248,.62)}
+  .section{padding:clamp(76px,12vh,136px) 0}
+  .section-head{text-align:center;max-width:760px;margin:0 auto 56px}
+  .section-head h2{font-size:clamp(3rem,7vw,6.4rem);margin-top:1rem}
+  .pin{min-height:130vh;display:grid;align-items:start}
+  .pin-inner{position:sticky;top:84px;display:grid;grid-template-columns:1fr 1fr;gap:clamp(2rem,5vw,5rem);align-items:center;padding:44px 0}
+  .pin h2{font-size:clamp(3.8rem,8vw,8rem)}
+  .pin p{margin-top:1rem;max-width:31rem;color:rgba(238,244,248,.68);font-size:1.1rem;line-height:1.65}
+  .pin-product{position:relative;min-height:540px;display:grid;place-items:center}
+  .pin-product img{position:relative;z-index:1;width:min(100%,520px);aspect-ratio:880/720;object-fit:contain;filter:drop-shadow(0 34px 70px rgba(0,0,0,.5))}
+  .pin-vortex{position:absolute;width:80%;aspect-ratio:1;border-radius:50%;background:conic-gradient(from 40deg,transparent,rgba(79,195,214,.7),transparent,rgba(255,255,255,.52),transparent);filter:blur(18px);opacity:.66}
+  .features{display:grid;gap:1.2rem}
+  .feature-card{display:grid;grid-template-columns:.9fr 1.1fr;gap:2rem;align-items:center;min-height:420px;padding:clamp(1rem,2.6vw,2rem);border:1px solid var(--line);border-radius:32px;background:white;box-shadow:var(--shadow);overflow:hidden}
+  .feature-card:nth-child(even){grid-template-columns:1.1fr .9fr}
+  .feature-card:nth-child(even) .feature-copy{order:2}
+  .feature-copy h3{font-size:clamp(3rem,6vw,5.5rem)}
+  .feature-copy p{max-width:30rem;margin-top:.8rem;color:var(--muted);font-size:1.03rem;line-height:1.62}
+  .feature-card img{width:100%;height:380px;object-fit:cover;border-radius:24px}
+  .commerce{display:grid;grid-template-columns:1fr 420px;gap:clamp(1.5rem,4vw,4rem);align-items:start}
+  .commerce h2{font-size:clamp(3.7rem,8vw,7.6rem)}
+  .reviews{display:grid;grid-template-columns:repeat(3,1fr);gap:1rem;margin-top:2rem}
+  .review{border:1px solid var(--line);border-radius:22px;padding:1.2rem;background:white}
+  .review .stars{color:var(--amber);letter-spacing:.08em}
+  .review h4{margin:.55rem 0 .35rem;font-size:1.02rem}
+  .review p{color:var(--muted);line-height:1.55;font-size:.94rem}
+  .review-meta{display:flex;justify-content:space-between;gap:.8rem;margin-top:.9rem;color:var(--soft);font-family:'Space Mono',monospace;font-size:.58rem;letter-spacing:.08em;text-transform:uppercase}
+  .rating-panel{display:grid;grid-template-columns:120px 1fr;gap:1.1rem;align-items:center;margin-top:1.2rem;padding:1rem;border:1px solid var(--line);border-radius:22px;background:rgba(255,255,255,.72)}
+  .rating-score{font-family:'Bebas Neue',sans-serif;font-size:4.4rem;line-height:.85}
+  .rating-score span{display:block;margin-top:.25rem;font-family:'Space Mono',monospace;font-size:.58rem;letter-spacing:.12em;color:var(--muted)}
+  .rating-bars{display:grid;gap:.48rem}
+  .rating-bar{display:grid;grid-template-columns:46px 1fr 34px;align-items:center;gap:.55rem;color:var(--muted);font-size:.75rem}
+  .rating-bar i{display:block;height:8px;border-radius:999px;background:linear-gradient(90deg,var(--amber),#ffd48a);width:var(--w)}
+  .rating-track{height:8px;border-radius:999px;background:rgba(7,16,24,.08);overflow:hidden}
+  .buy-box{position:sticky;top:100px;border:1px solid var(--line);border-radius:28px;padding:1.3rem;background:white;box-shadow:var(--shadow)}
+  .price-line{display:flex;align-items:flex-end;gap:.6rem;flex-wrap:wrap}
   .price{font-family:'Bebas Neue',sans-serif;font-size:3.35rem;line-height:.9}
   .was{text-decoration:line-through;color:var(--soft)}
-  .per{font-family:'Space Mono',monospace;font-size:.66rem;letter-spacing:.09em;color:var(--muted)}
+  .per{font-family:'Space Mono',monospace;font-size:.64rem;letter-spacing:.09em;color:var(--muted)}
   .stock{margin-top:.9rem;color:var(--good);font-weight:700}
-  .delivery{margin-top:.28rem;color:var(--muted);line-height:1.55;font-size:.92rem}
+  .delivery{margin-top:.3rem;color:var(--muted);line-height:1.55;font-size:.92rem}
   .delivery b{color:var(--ink)}
-  .purchase-row{display:flex;align-items:center;justify-content:space-between;gap:1rem;margin:1.05rem 0}
-  .qty{display:inline-flex;align-items:center;border:1px solid var(--line);border-radius:999px;background:rgba(255,255,255,.03);overflow:hidden}
-  .qty button{width:40px;height:40px;border:0;background:transparent;color:var(--ink);cursor:pointer}
-  .qty button:hover{background:rgba(255,255,255,.08)}
+  .qty-row{display:flex;align-items:center;justify-content:space-between;gap:1rem;margin:1.1rem 0}
+  .qty{display:inline-flex;align-items:center;border:1px solid var(--line);border-radius:999px;overflow:hidden}
+  .qty button{width:40px;height:40px;border:0;background:white;cursor:pointer}
+  .qty button:hover{background:#eef4f8}
   .qty span{min-width:34px;text-align:center;font-family:'Space Mono',monospace}
-  .pack-note{color:var(--muted);font-size:.9rem;text-align:right}
-  .buy-actions{display:grid;grid-template-columns:1fr 1fr;gap:.72rem}
-  .secure,.ships{color:var(--muted);font-size:.82rem;line-height:1.5}
-  .secure{margin-top:.9rem;font-family:'Space Mono',monospace;font-size:.58rem;letter-spacing:.1em;text-transform:uppercase}
-  .ships b{color:var(--ink)}
-  .trust-strip{border-top:1px solid var(--line);border-bottom:1px solid var(--line);background:rgba(5,11,17,.64);backdrop-filter:blur(10px)}
-  .trust-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1px}
-  .trust{padding:1.2rem;text-align:center;border-left:1px solid var(--line)}
-  .trust:first-child{border-left:0}
-  .trust b{display:block;font-family:'Bebas Neue',sans-serif;font-size:2.3rem;letter-spacing:.04em;color:var(--accent);line-height:.9}
-  .trust span{font-family:'Space Mono',monospace;font-size:.62rem;letter-spacing:.14em;text-transform:uppercase;color:var(--muted)}
-
-  section.sec{position:relative;padding:clamp(76px,12vh,132px) 0}
-  .sec-head{max-width:740px;margin:0 auto 56px;text-align:center}
-  .sec-head .title{font-size:clamp(3rem,7vw,6.2rem);margin-top:1rem}
-  .feature{display:grid;grid-template-columns:1fr 1fr;gap:clamp(1.5rem,4vw,4rem);align-items:center;min-height:64vh;margin:48px 0}
-  .feature:nth-child(even) .feature-media{order:2}
-  .feature h3{font-size:clamp(3rem,7vw,6.1rem)}
-  .feature p{max-width:31rem;margin-top:1rem;color:var(--muted);font-size:1.08rem;line-height:1.65}
-  .feature-media{position:relative;min-height:360px;border:1px solid var(--line);border-radius:28px;overflow:hidden;background:#071018;box-shadow:var(--shadow)}
-  .feature-media img{width:100%;height:100%;min-height:360px;display:block;object-fit:cover;filter:saturate(.92) contrast(1.05)}
-  .feature-media::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,transparent,rgba(3,7,11,.34));pointer-events:none}
-  .feature-badge{position:absolute;left:20px;bottom:20px;padding:.65rem .82rem;border:1px solid var(--line);border-radius:999px;background:rgba(3,7,11,.68);font-family:'Space Mono',monospace;font-size:.62rem;letter-spacing:.12em;text-transform:uppercase;color:var(--accent);backdrop-filter:blur(12px)}
-  .commerce{display:grid;grid-template-columns:.72fr 1.28fr;gap:clamp(1.5rem,4vw,4rem);align-items:start}
-  .review-summary{position:sticky;top:100px;border:1px solid var(--line);border-radius:24px;padding:1.5rem;background:rgba(7,16,24,.68)}
-  .review-summary .big{font-family:'Bebas Neue',sans-serif;font-size:5rem;line-height:.9;color:var(--accent)}
-  .bars{display:grid;gap:.56rem;margin-top:1.25rem}
-  .bar{display:grid;grid-template-columns:42px 1fr 38px;gap:.7rem;align-items:center;color:var(--muted);font-size:.78rem}
-  .track{height:8px;border-radius:99px;background:rgba(255,255,255,.09);overflow:hidden}
-  .fill{display:block;height:100%;width:0;background:var(--amber);transition:width 1s var(--smooth)}
-  .reviews{display:grid;gap:1rem}
-  .review{border:1px solid var(--line);border-radius:20px;padding:1.2rem;background:rgba(7,16,24,.62)}
-  .review-top{display:flex;justify-content:space-between;gap:1rem;color:var(--muted);font-size:.78rem}
-  .review h4{font-size:1.05rem;margin:.55rem 0 .35rem}
-  .review p{color:var(--muted);line-height:1.58}
-  .faq{max-width:780px;margin:0 auto}
-  .faq-item{border-bottom:1px solid var(--line)}
-  .faq-q{width:100%;display:flex;justify-content:space-between;gap:1rem;padding:1.35rem 0;border:0;background:transparent;color:var(--ink);text-align:left;cursor:pointer;font-size:1.05rem}
-  .faq-q span{color:var(--accent);font-size:1.35rem;transition:transform .3s var(--spring)}
-  .faq-item.open .faq-q span{transform:rotate(45deg)}
-  .faq-a{max-height:0;overflow:hidden;color:var(--muted);line-height:1.62;transition:max-height .36s var(--smooth)}
-  .faq-a p{padding:0 0 1.25rem}
-  .final{text-align:center}
-  .final .title{font-size:clamp(3.4rem,8vw,7.4rem)}
+  .pack-note{text-align:right;color:var(--muted);font-size:.9rem}
+  .buy-actions{display:grid;grid-template-columns:1fr 1fr;gap:.7rem}
+  .secure{margin-top:.9rem;color:var(--muted);font-family:'Space Mono',monospace;font-size:.58rem;letter-spacing:.1em;text-transform:uppercase}
+  .choice-row{display:grid;grid-template-columns:1fr 1fr;gap:.6rem;margin:1rem 0}
+  .choice{border:1px solid var(--line);border-radius:18px;padding:.8rem;background:white;text-align:left;cursor:pointer;color:var(--ink)}
+  .choice.active{border-color:var(--accent);box-shadow:0 0 0 3px rgba(79,195,214,.16)}
+  .choice b{display:block;font-size:.9rem}
+  .choice span{display:block;margin-top:.2rem;color:var(--muted);font-size:.78rem}
+  .buy-lines{display:grid;gap:.48rem;margin:.85rem 0;padding:.85rem 0;border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+  .buy-line{display:flex;justify-content:space-between;gap:1rem;color:var(--muted);font-size:.88rem}
+  .buy-line strong{color:var(--ink)}
+  .checkout-note{margin-top:.75rem;padding:.72rem .82rem;border-radius:16px;background:#eef8fa;color:#075d6b;font-size:.84rem;line-height:1.45}
   footer{padding:44px 0 86px;border-top:1px solid var(--line);color:var(--muted)}
   footer .wrap{display:flex;align-items:center;justify-content:space-between;gap:1rem;flex-wrap:wrap}
-  footer a{margin-left:1.1rem;color:var(--muted)}
-  footer a:hover{color:var(--accent)}
-  .reveal{opacity:0;transform:translateY(32px);transition:opacity .82s var(--smooth),transform .82s var(--spring)}
-  .reveal.in{opacity:1;transform:none}
+  footer a{margin-left:1rem;color:var(--muted)}
+  footer a:hover{color:var(--ink)}
 
-  @media(max-width:920px){
-    .hero{padding-top:96px}
-    .hero-grid,.feature,.commerce{grid-template-columns:1fr}
-    .hero-copy{text-align:center}
-    .hero-copy .eyebrow,.rating-row,.price-line{justify-content:center}
+  @media(max-width:940px){
+    .hero-grid,.pin-inner,.feature-card,.feature-card:nth-child(even),.commerce{grid-template-columns:1fr}
+    .hero-copy{text-align:center;order:2}
+    .hero-actions,.hero-copy .eyebrow{justify-content:center}
     .subhead{margin-inline:auto}
-    .product-stage{min-height:420px;order:-1}
-    .review-summary{position:relative;top:auto}
-    .feature:nth-child(even) .feature-media{order:0}
+    .motion-stage{min-height:460px}
+    .pin-inner{position:relative;top:auto;text-align:center}
+    .pin p{margin-inline:auto}
+    .feature-card:nth-child(even) .feature-copy{order:0}
+    .reviews{grid-template-columns:1fr}
+    .buy-box{position:relative;top:auto}
   }
   @media(max-width:680px){
     .wrap{padding:0 20px}
     .nav-links a:not(.btn){display:none}
     .hero{padding-top:152px}
-    .hero-grid{gap:1.35rem}
-    .product-card{padding:12px;border-radius:22px}
-    .product-stage{min-height:340px}
-    .hero-copy h1{font-size:clamp(3.5rem,16vw,5.6rem)}
-    .buy-box{padding:1rem;border-radius:20px}
-    .purchase-row{align-items:flex-start}
+    .hero-copy h1{font-size:clamp(3.5rem,16vw,5.7rem)}
+    .motion-stage{min-height:350px}
+    .can-frame{padding:12px;border-radius:24px}
+    .stats{grid-template-columns:repeat(2,1fr)}
+    .stat:nth-child(3){border-left:0;border-top:1px solid var(--line-dark)}
+    .stat:nth-child(4){border-top:1px solid var(--line-dark)}
+    .pin-product{min-height:360px}
+    .feature-card img{height:270px}
     .buy-actions{grid-template-columns:1fr}
-    .trust-grid{grid-template-columns:repeat(2,1fr)}
-    .trust:nth-child(3){border-left:0;border-top:1px solid var(--line)}
-    .trust:nth-child(4){border-top:1px solid var(--line)}
-    .feature-media,.feature-media img{min-height:270px}
-    .switcher{top:84px;bottom:auto;max-width:calc(100vw - 24px);overflow:auto}
+    .switcher{max-width:calc(100vw - 24px);overflow:auto}
     .switcher a{font-size:.52rem;padding:.5rem .62rem}
-  }
-  @media(prefers-reduced-motion:reduce){
-    html{scroll-behavior:auto}
-    .reveal{opacity:1;transform:none;transition:none}
-    .fill{transition:none}
   }
 </style>
 </head>
 <body>
-  <canvas id="bg"></canvas>
-  <div class="scrim"></div>
-  <div class="page">
-    <nav id="nav"><div class="wrap">
-      <a class="logo" href="#top">VORTEX</a>
-      <div class="nav-links">
-        <a href="#features">Details</a>
-        <a href="#reviews">Reviews</a>
-        <a href="index.html">The film</a>
-        <a class="btn btn-primary" href="#buy">Buy</a>
-      </div>
-    </div></nav>
+<div id="root"></div>
+<script type="importmap">
+{
+  "imports": {
+    "react": "https://esm.sh/react@18.2.0",
+    "react-dom/client": "https://esm.sh/react-dom@18.2.0/client",
+    "framer-motion": "https://esm.sh/framer-motion@10.16.16?external=react,react-dom"
+  }
+}
+</script>
+<script type="module">
+  import React, { useEffect, useState } from 'react';
+  import { createRoot } from 'react-dom/client';
+  import { motion, useScroll, useTransform } from 'framer-motion';
 
-    <div class="switcher" aria-label="Shop comparison pages">
-      <a class="active" href="shop.html">Static upgrade</a>
-      <a href="shop-react.html">React motion</a>
-      <a href="shop-original.html">Original</a>
-    </div>
+  const h = React.createElement;
+  const ease = [0.2, 0.7, 0.2, 1];
+  const frame = (n) => 'frames/frame_' + String(Math.max(1, Math.min(477, n))).padStart(4, '0') + '.jpg';
+  const reveal = {
+    initial: { opacity: 0, y: 28 },
+    whileInView: { opacity: 1, y: 0 },
+    viewport: { once: true, amount: 0.22 },
+    transition: { duration: 0.72, ease }
+  };
 
-    <header class="hero" id="top"><div class="wrap hero-grid" id="buy">
-      <div class="product-stage reveal">
-        <div class="product-halo"></div>
-        <div class="product-card">
-          <canvas id="can3d" aria-label="Interactive VORTEX Original can"></canvas>
-          <div class="spin-hint">Drag to spin</div>
-        </div>
-      </div>
-      <div class="hero-copy">
-        <span class="eyebrow reveal">VORTEX Original only</span>
-        <h1 class="title reveal">Energy without the noise.</h1>
-        <p class="subhead reveal">A crisp sparkling focus drink with zero sugar, 200 mg caffeine, and the calm pull of the original ocean swirl.</p>
-        <div class="rating-row reveal"><span class="stars">&#9733;&#9733;&#9733;&#9733;&#9733;</span><span>4.9</span><a href="#reviews">2,481 ratings</a></div>
-        <div class="buy-box reveal">
-          <div class="price-line"><span class="price">$29.99</span><span class="was">$35.99</span><span class="per">$2.50 / can</span></div>
-          <div class="stock">In stock</div>
-          <div class="delivery">FREE delivery <b>Tue, Jun 24</b>. Order within <b>8 hrs</b> for fastest arrival.</div>
-          <div class="purchase-row">
-            <div class="qty"><button id="qminus" aria-label="Decrease quantity">-</button><span id="qval">1</span><button id="qplus" aria-label="Increase quantity">+</button></div>
-            <div class="pack-note">12-pack<br>VORTEX Original</div>
-          </div>
-          <div class="buy-actions">
-            <a href="#" class="btn btn-amber" id="addcart">Add to Cart</a>
-            <a href="#" class="btn btn-primary" id="buynow">Buy Now</a>
-          </div>
-          <div class="secure">Secure demo transaction</div>
-          <div class="ships">Ships from and sold by <b>VORTEX</b>. 30-day focus-back guarantee.</div>
-        </div>
-      </div>
-    </div></header>
+  function Nav(){
+    return h(React.Fragment, null,
+      h('nav', null, h('div', { className:'wrap' },
+        h('a', { className:'logo', href:'#top' }, 'VORTEX'),
+        h('div', { className:'nav-links' },
+          h('a', { href:'#motion' }, 'Motion'),
+          h('a', { href:'#reviews' }, 'Reviews'),
+          h('a', { href:'index.html' }, 'The film'),
+          h('a', { className:'btn btn-primary', href:'#buy' }, 'Buy')
+        )
+      )),
+      h('div', { className:'switcher', 'aria-label':'Shop comparison pages' },
+        h('a', { className:'active', href:'shop.html' }, 'VORTEX shop'),
+        h('a', { href:'shop-react.html' }, 'Motion cut'),
+        h('a', { href:'shop-original.html' }, 'Original')
+      )
+    );
+  }
 
-    <div class="trust-strip"><div class="wrap trust-grid">
-      <div class="trust reveal"><b>200</b><span>mg caffeine</span></div>
-      <div class="trust reveal"><b>0</b><span>g sugar</span></div>
-      <div class="trust reveal"><b>16</b><span>fl oz</span></div>
-      <div class="trust reveal"><b>1</b><span>original flavor</span></div>
-    </div></div>
+  function ProductHero(){
+    const heroFrames = [70, 88, 106, 124, 142, 160, 178, 196, 214, 232, 250].map(frame);
+    const [src, setSrc] = useState(heroFrames[0]);
+    useEffect(() => {
+      heroFrames.forEach((url) => { const img = new Image(); img.src = url; });
+      let i = 0;
+      const id = setInterval(() => { i = (i + 1) % heroFrames.length; setSrc(heroFrames[i]); }, 220);
+      return () => clearInterval(id);
+    }, []);
+    return h('section', { className:'hero', id:'top' }, h('div', { className:'wrap hero-grid' },
+      h(motion.div, { className:'hero-copy', ...reveal },
+        h('span', { className:'eyebrow' }, 'VORTEX motion shop'),
+        h(motion.h1, { className:'title', initial:{opacity:0,y:24}, animate:{opacity:1,y:0}, transition:{duration:.8,ease} }, 'Original, made cinematic.'),
+        h('p', { className:'subhead' }, 'A premium commerce take on VORTEX Original: one flavor, zero sugar, 200 mg caffeine, and motion that feels closer to a product launch than a checkout form.'),
+        h('div', { className:'hero-actions' },
+          h('a', { className:'btn btn-primary', href:'#buy' }, 'Buy VORTEX Original'),
+          h('a', { className:'btn btn-ghost', href:'index.html' }, 'Watch the film')
+        )
+      ),
+      h(motion.div, { className:'motion-stage', initial:{opacity:0,scale:.96}, animate:{opacity:1,scale:1}, transition:{duration:.9,ease} },
+        h(motion.div, { className:'orb', animate:{rotate:360,scale:[1,1.06,1]}, transition:{rotate:{duration:20,repeat:Infinity,ease:'linear'},scale:{duration:5,repeat:Infinity,ease:'easeInOut'}} }),
+        h(motion.div, { className:'can-frame', whileHover:{y:-8,rotate:-1}, transition:{type:'spring',stiffness:140,damping:18} },
+          h('img', { src, alt:'VORTEX Original rotating can' }),
+          h('div', { className:'can-caption' }, h('span', null, 'Animated frame sequence'), h('span', null, 'VORTEX Original'))
+        )
+      )
+    ));
+  }
 
-    <section class="sec" id="features"><div class="wrap">
-      <div class="sec-head"><span class="eyebrow reveal">Product detail</span><h2 class="title reveal">Built like a ritual.</h2></div>
-      <div class="feature">
-        <div class="feature-copy reveal"><h3 class="title">Razor focus</h3><p>VORTEX Original keeps the brief simple: clean caffeine, sparkling lift, and a smoother focus curve for deep work, training, or the late push.</p></div>
-        <div class="feature-media reveal"><img src="frames/frame_0188.jpg" alt="VORTEX Original can detail"><span class="feature-badge">Original can</span></div>
-      </div>
-      <div class="feature">
-        <div class="feature-copy reveal"><h3 class="title">No sugar load</h3><p>The taste stays cold, crisp, and direct without turning into syrup. One flavor, one job: pull you into the zone.</p></div>
-        <div class="feature-media reveal"><img src="ocean/ocean_0068.jpg" alt="Ocean vortex texture"><span class="feature-badge">Ocean swirl</span></div>
-      </div>
-      <div class="feature">
-        <div class="feature-copy reveal"><h3 class="title">Ready when you are</h3><p>Stock a 12-pack of the original. No sampler decisions, no flavor grid, no distractions from the product you came to buy.</p></div>
-        <div class="feature-media reveal"><img src="man/man_0068.jpg" alt="Person drinking VORTEX Original"><span class="feature-badge">Focus moment</span></div>
-      </div>
-    </div></section>
+  function Stats(){
+    return h('div', { className:'dark-band' }, h('div', { className:'wrap stats' },
+      [['200','mg caffeine'],['0','g sugar'],['16','fl oz'],['1','original flavor']].map((s) =>
+        h(motion.div, { className:'stat', key:s[1], ...reveal }, h('b', null, s[0]), h('span', null, s[1]))
+      )
+    ));
+  }
 
-    <section class="sec" id="reviews"><div class="wrap commerce">
-      <div class="review-summary reveal">
-        <span class="eyebrow">Customer signal</span>
-        <div class="big">4.9</div>
-        <div class="stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
-        <p class="delivery">2,481 global ratings</p>
-        <div class="bars">
-          <div class="bar"><span>5 star</span><div class="track"><i class="fill" data-w="88"></i></div><span>88%</span></div>
-          <div class="bar"><span>4 star</span><div class="track"><i class="fill" data-w="9"></i></div><span>9%</span></div>
-          <div class="bar"><span>3 star</span><div class="track"><i class="fill" data-w="2"></i></div><span>2%</span></div>
-          <div class="bar"><span>2 star</span><div class="track"><i class="fill" data-w="1"></i></div><span>1%</span></div>
-          <div class="bar"><span>1 star</span><div class="track"><i class="fill" data-w="0"></i></div><span>0%</span></div>
-        </div>
-      </div>
-      <div class="reviews">
-        <div class="review reveal"><div class="review-top"><span class="stars">&#9733;&#9733;&#9733;&#9733;&#9733;</span><span>Verified Purchase</span></div><h4>First energy drink that feels calm.</h4><p>It hits quickly without making me feel scattered. Original is the only flavor I need in the fridge.</p></div>
-        <div class="review reveal"><div class="review-top"><span class="stars">&#9733;&#9733;&#9733;&#9733;&#9733;</span><span>Verified Purchase</span></div><h4>Clean taste, no sugar crash.</h4><p>Cold, sharp, and not too sweet. The 12-pack is the right format because I can just restock the original.</p></div>
-        <div class="review reveal"><div class="review-top"><span class="stars">&#9733;&#9733;&#9733;&#9733;&#9733;</span><span>Verified Purchase</span></div><h4>My deep-work can.</h4><p>I open one before long design sessions. The branding feels premium and the focus feels steady.</p></div>
-      </div>
-    </div></section>
+  function MotionMoment(){
+    const { scrollYProgress } = useScroll();
+    const rotate = useTransform(scrollYProgress, [0, 1], [0, 28]);
+    const scale = useTransform(scrollYProgress, [0, .55, 1], [1, 1.06, 1]);
+    const [src, setSrc] = useState(frame(92));
+    useEffect(() => scrollYProgress.on('change', (v) => setSrc(frame(92 + Math.round(v * 210)))), [scrollYProgress]);
+    return h('section', { className:'dark-band section pin', id:'motion' }, h('div', { className:'wrap pin-inner' },
+      h(motion.div, { ...reveal },
+        h('span', { className:'eyebrow' }, 'Scroll-scrubbed product'),
+        h('h2', { className:'title' }, 'The can keeps moving with you.'),
+        h('p', null, 'The product frame and vortex field move with the page, turning the shop into a VORTEX launch moment that still ends in a clear purchase box.')
+      ),
+      h('div', { className:'pin-product' },
+        h(motion.div, { className:'pin-vortex', style:{ rotate, scale } }),
+        h(motion.img, { src, alt:'Scroll animated VORTEX Original can', style:{ rotate, scale } })
+      )
+    ));
+  }
 
-    <section class="sec"><div class="wrap">
-      <div class="sec-head"><span class="eyebrow reveal">Good to know</span><h2 class="title reveal">Questions</h2></div>
-      <div class="faq">
-        <div class="faq-item reveal"><button class="faq-q">How much caffeine is in one can?<span>+</span></button><div class="faq-a"><p>Each 16 fl oz can has 200 mg caffeine. VORTEX is intended for adults who already tolerate caffeine.</p></div></div>
-        <div class="faq-item reveal"><button class="faq-q">Are there other versions on this page?<span>+</span></button><div class="faq-a"><p>No. This shop is only selling VORTEX Original, sold as a 12-pack.</p></div></div>
-        <div class="faq-item reveal"><button class="faq-q">Is checkout real?<span>+</span></button><div class="faq-a"><p>No. Add to Cart and Buy Now are demo interactions for this product page prototype.</p></div></div>
-        <div class="faq-item reveal"><button class="faq-q">What is the guarantee?<span>+</span></button><div class="faq-a"><p>A 30-day focus-back guarantee is shown as part of the commerce concept.</p></div></div>
-      </div>
-    </div></section>
+  function Features(){
+    const cards = [
+      ['Razor focus', 'A 200 mg caffeine profile for getting locked in without turning the page into fake science claims.', 'frames/frame_0188.jpg', 'VORTEX Original can detail'],
+      ['Zero sugar', 'Cold, crisp, and direct. The original flavor keeps the shop focused on one buy decision.', 'ocean/ocean_0068.jpg', 'Ocean vortex texture'],
+      ['A cleaner sell', 'Cinematic motion up front, clear product details when it is time to buy.', 'man/man_0068.jpg', 'Person drinking VORTEX Original']
+    ];
+    return h('section', { className:'section' }, h('div', { className:'wrap' },
+      h('div', { className:'section-head' }, h('span', { className:'eyebrow' }, 'Feature beats'), h('h2', { className:'title' }, 'One claim at a time.')),
+      h('div', { className:'features' }, cards.map((c) =>
+        h(motion.article, { className:'feature-card', key:c[0], ...reveal },
+          h('div', { className:'feature-copy' }, h('h3', { className:'title' }, c[0]), h('p', null, c[1])),
+          h('img', { src:c[2], alt:c[3] })
+        )
+      ))
+    ));
+  }
 
-    <section class="sec final"><div class="wrap">
-      <h2 class="title reveal">Stock the original.</h2>
-      <p class="subhead reveal" style="margin:1rem auto 1.7rem">Zero sugar. 200 mg caffeine. One flavor. One clear decision.</p>
-      <a href="#buy" class="btn btn-primary reveal">Buy VORTEX Original</a>
-    </div></section>
+  function BuyBox(){
+    const [qty, setQty] = useState(1);
+    const [cart, setCart] = useState('Add to Cart');
+    const [buy, setBuy] = useState('Buy Now');
+    const [delivery, setDelivery] = useState('fast');
+    const unit = 29.99;
+    const subtotal = (unit * qty).toFixed(2);
+    const deliveryLabel = delivery === 'fast' ? 'Fast delivery' : 'Standard delivery';
+    const deliveryDate = delivery === 'fast' ? 'Tue, Jun 24' : 'Thu, Jun 26';
+    const flash = (setter, text, original) => { setter(text); setTimeout(() => setter(original), 1600); };
+    return h(motion.aside, { className:'buy-box', id:'buy', ...reveal },
+      h('div', { className:'price-line' }, h('span', { className:'price' }, '$29.99'), h('span', { className:'was' }, '$35.99'), h('span', { className:'per' }, '$2.50 / can')),
+      h('div', { className:'stock' }, 'In stock'),
+      h('div', { className:'delivery' }, 'FREE delivery ', h('b', null, deliveryDate), '. Order within ', h('b', null, '8 hrs'), ' for fastest arrival.'),
+      h('div', { className:'choice-row', 'aria-label':'Delivery speed' },
+        h('button', { className:'choice ' + (delivery === 'fast' ? 'active' : ''), onClick:() => setDelivery('fast') }, h('b', null, 'Fast'), h('span', null, 'Tue, Jun 24')),
+        h('button', { className:'choice ' + (delivery === 'standard' ? 'active' : ''), onClick:() => setDelivery('standard') }, h('b', null, 'Standard'), h('span', null, 'Thu, Jun 26'))
+      ),
+      h('div', { className:'qty-row' },
+        h('div', { className:'qty' },
+          h('button', { 'aria-label':'Decrease quantity', onClick:() => setQty(Math.max(1, qty - 1)) }, '-'),
+          h('span', null, qty),
+          h('button', { 'aria-label':'Increase quantity', onClick:() => setQty(Math.min(5, qty + 1)) }, '+')
+        ),
+        h('div', { className:'pack-note' }, '12-pack', h('br'), 'VORTEX Original')
+      ),
+      h('div', { className:'buy-lines' },
+        h('div', { className:'buy-line' }, h('span', null, qty + ' x 12-pack'), h('strong', null, '$' + subtotal)),
+        h('div', { className:'buy-line' }, h('span', null, deliveryLabel), h('strong', null, 'FREE')),
+        h('div', { className:'buy-line' }, h('span', null, 'Estimated total'), h('strong', null, '$' + subtotal))
+      ),
+      h('div', { className:'buy-actions' },
+        h('button', { className:'btn btn-amber', onClick:() => flash(setCart, 'Added ' + qty + ' pack' + (qty > 1 ? 's' : ''), 'Add to Cart') }, cart),
+        h('button', { className:'btn btn-teal', onClick:() => flash(setBuy, 'Checkout demo', 'Buy Now') }, buy)
+      ),
+      h('div', { className:'checkout-note' }, 'Demo checkout: no payment is collected. Use this box to test the buying flow and page feel.'),
+      h('div', { className:'secure' }, 'Secure demo transaction'),
+      h('div', { className:'delivery' }, 'Ships from and sold by ', h('b', null, 'VORTEX'), '. 30-day focus-back guarantee.')
+    );
+  }
 
-    <footer><div class="wrap">
-      <span class="logo">VORTEX</span>
-      <div><span>Crafted for focus</span><a href="index.html">The film</a><a href="shop-react.html">React version</a><a href="#top">Top</a></div>
-    </div></footer>
-  </div>
+  function Commerce(){
+    const reviews = [
+      ['First energy drink that feels calm.', 'It hits quickly without making me scattered. Original is the only can I keep stocked now.', 'Mara K.', 'Verified 12-pack'],
+      ['Clean taste, no sugar crash.', 'Cold, sharp, and not too sweet. The 12-pack format makes sense because I just want the original.', 'Devon R.', 'Repeat buyer'],
+      ['My deep-work can.', 'I open one before long design sessions. The focus feels steady and the branding feels serious.', 'Sofia L.', 'Verified purchase']
+    ];
+    return h('section', { className:'section', id:'reviews' }, h('div', { className:'wrap commerce' },
+      h('div', null,
+        h(motion.div, { ...reveal }, h('span', { className:'eyebrow' }, 'VORTEX proof'), h('h2', { className:'title' }, 'Clear energy. Clean checkout.'), h('p', { className:'subhead' }, 'The page stays focused on VORTEX Original: one flavor, one pack, one clear path to buy.')),
+        h(motion.div, { className:'rating-panel', ...reveal },
+          h('div', { className:'rating-score' }, '4.9', h('span', null, '2,481 ratings')),
+          h('div', { className:'rating-bars' },
+            [['5 star','88%','88%'],['4 star','9%','9%'],['3 star','2%','2%'],['2 star','1%','1%']].map((row) =>
+              h('div', { className:'rating-bar', key:row[0] }, h('span', null, row[0]), h('div', { className:'rating-track' }, h('i', { style:{ '--w': row[1] } })), h('span', null, row[2]))
+            )
+          )
+        ),
+        h('div', { className:'reviews' }, reviews.map((r) =>
+          h(motion.div, { className:'review', key:r[0], ...reveal },
+            h('div', { className:'stars' }, '\u2605\u2605\u2605\u2605\u2605'),
+            h('h4', null, r[0]),
+            h('p', null, r[1]),
+            h('div', { className:'review-meta' }, h('span', null, r[2]), h('span', null, r[3]))
+          )
+        ))
+      ),
+      h(BuyBox)
+    ));
+  }
 
-  <script type="importmap">{ "imports": { "three": "./libs/three.module.js" } }</script>
-  <script type="module">
-    import * as THREE from 'three';
+  function App(){
+    return h('div', { className:'page' },
+      h(Nav),
+      h(ProductHero),
+      h(Stats),
+      h(MotionMoment),
+      h(Features),
+      h(Commerce),
+      h('footer', null, h('div', { className:'wrap' }, h('span', { className:'logo' }, 'VORTEX'), h('div', null, h('span', null, 'VORTEX Original shop'), h('a', { href:'index.html' }, 'The film'), h('a', { href:'shop-original.html' }, 'Original'), h('a', { href:'#top' }, 'Top'))))
+    );
+  }
 
-    (function(){
-      const canvas = document.getElementById('bg');
-      const renderer = new THREE.WebGLRenderer({ canvas, antialias:true });
-      renderer.setPixelRatio(Math.min(window.devicePixelRatio,1.75));
-      const scene = new THREE.Scene();
-      const camera = new THREE.Camera();
-      const uniforms = { uTime:{value:0}, uRes:{value:new THREE.Vector2(1,1)}, uMouse:{value:new THREE.Vector2(0,0)}, uScroll:{value:0} };
-      const frag = `
-        precision highp float;
-        varying vec2 vUv; uniform float uTime; uniform vec2 uRes; uniform vec2 uMouse; uniform float uScroll;
-        float hash(vec2 p){return fract(sin(dot(p,vec2(127.1,311.7)))*43758.5453);}
-        float noise(vec2 p){vec2 i=floor(p),f=fract(p);float a=hash(i),b=hash(i+vec2(1.,0.)),c=hash(i+vec2(0.,1.)),d=hash(i+vec2(1.,1.));vec2 u=f*f*(3.-2.*f);return mix(mix(a,b,u.x),mix(c,d,u.x),u.y);}
-        float fbm(vec2 p){float v=0.,a=.5;for(int i=0;i<5;i++){v+=a*noise(p);p*=2.02;a*=.5;}return v;}
-        void main(){
-          vec2 p=vUv-0.5; p.x*=uRes.x/uRes.y; p+=uMouse*0.045; p.y+=uScroll*0.12;
-          float r=length(p); float a=atan(p.y,p.x)+(0.52/(r+0.16))+uTime*0.055;
-          vec2 q=vec2(cos(a),sin(a))*r;
-          float n=fbm(q*2.4+uTime*0.035); n=fbm(q*3.25+n*1.5-uTime*0.02);
-          vec3 dark=vec3(0.012,0.027,0.043), deep=vec3(0.035,0.09,0.13), teal=vec3(0.31,0.76,0.84);
-          vec3 col=mix(dark,deep,smoothstep(.2,.86,n));
-          col=mix(col,teal,smoothstep(.58,.98,n)*.44);
-          col+=teal*pow(max(0.,1.-r*1.08),3.6)*.18;
-          col*=smoothstep(1.28,.12,r);
-          gl_FragColor=vec4(col,1.);
-        }`;
-      const mat = new THREE.ShaderMaterial({ uniforms, vertexShader:`varying vec2 vUv; void main(){vUv=uv; gl_Position=vec4(position.xy,0.,1.);}`, fragmentShader:frag });
-      scene.add(new THREE.Mesh(new THREE.PlaneGeometry(2,2), mat));
-      const resize=()=>{ const w=innerWidth,h=innerHeight; renderer.setSize(w,h); uniforms.uRes.value.set(w,h); };
-      resize(); addEventListener('resize',resize);
-      let mx=0,my=0; addEventListener('mousemove',e=>{ mx=(e.clientX/innerWidth)*2-1; my=-((e.clientY/innerHeight)*2-1); });
-      addEventListener('scroll',()=>{ const m=document.documentElement.scrollHeight-innerHeight; uniforms.uScroll.value=m>0?scrollY/m:0; },{passive:true});
-      const start=performance.now();
-      (function loop(){ uniforms.uTime.value=(performance.now()-start)/1000; uniforms.uMouse.value.x+=(mx-uniforms.uMouse.value.x)*.05; uniforms.uMouse.value.y+=(my-uniforms.uMouse.value.y)*.05; renderer.render(scene,camera); requestAnimationFrame(loop); })();
-    })();
-
-    (function(){
-      const cv=document.getElementById('can3d'); if(!cv) return;
-      const ctx=cv.getContext('2d');
-      const FRAMES=[]; for(let f=1;f<=300;f+=3) FRAMES.push(f);
-      const imgs=new Array(FRAMES.length); let ready=0,idx=24,auto=true,drag=false,lastX=0,booted=false;
-      const size=()=>{ const r=cv.getBoundingClientRect(),d=Math.min(devicePixelRatio||1,2); cv.width=Math.max(1,r.width*d|0); cv.height=Math.max(1,r.height*d|0); };
-      const draw=()=>{ const im=imgs[((Math.round(idx)%FRAMES.length)+FRAMES.length)%FRAMES.length]; ctx.clearRect(0,0,cv.width,cv.height); if(!im)return; const s=Math.min(cv.width/im.width,cv.height/im.height),w=im.width*s,h=im.height*s; ctx.drawImage(im,(cv.width-w)/2,(cv.height-h)/2,w,h); };
-      const loop=()=>{ if(auto&&!drag&&ready>6) idx+=0.33; draw(); requestAnimationFrame(loop); };
-      const boot=()=>{ if(booted)return; booted=true; size(); FRAMES.forEach((fn,k)=>{ const im=new Image(); im.onload=()=>{imgs[k]=im;ready++;}; im.src='frames/frame_'+String(fn).padStart(4,'0')+'.jpg'; }); requestAnimationFrame(loop); };
-      cv.addEventListener('pointerdown',e=>{drag=true;auto=false;lastX=e.clientX;try{cv.setPointerCapture(e.pointerId)}catch(_){}});
-      cv.addEventListener('pointermove',e=>{ if(!drag)return; idx-=(e.clientX-lastX)*.25; lastX=e.clientX; });
-      const rel=()=>{drag=false;setTimeout(()=>auto=true,2200)}; cv.addEventListener('pointerup',rel); cv.addEventListener('pointercancel',rel);
-      addEventListener('resize',()=>{ if(booted){size();draw();} });
-      new IntersectionObserver((es,o)=>{ es.forEach(en=>{ if(en.isIntersecting){boot();o.disconnect();} }); },{threshold:.1}).observe(cv);
-    })();
-
-    const nav=document.getElementById('nav');
-    const onScroll=()=>nav.classList.toggle('scrolled',scrollY>30); addEventListener('scroll',onScroll,{passive:true}); onScroll();
-    const io=new IntersectionObserver((es)=>{ es.forEach(e=>{ if(!e.isIntersecting)return; e.target.classList.add('in'); io.unobserve(e.target); }); },{threshold:.14,rootMargin:'0px 0px -8% 0px'});
-    document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
-    const bio=new IntersectionObserver((es)=>{ es.forEach(e=>{ if(e.isIntersecting){ e.target.style.width=e.target.dataset.w+'%'; bio.unobserve(e.target);} }); },{threshold:.5});
-    document.querySelectorAll('.fill').forEach(el=>bio.observe(el));
-    let q=1; const qv=document.getElementById('qval');
-    document.getElementById('qplus').onclick=()=>{ q=Math.min(5,q+1); qv.textContent=q; };
-    document.getElementById('qminus').onclick=()=>{ q=Math.max(1,q-1); qv.textContent=q; };
-    const flash=(el,txt)=>{ const o=el.textContent; el.textContent=txt; setTimeout(()=>{el.textContent=o;},1300); };
-    document.getElementById('addcart').addEventListener('click',e=>{e.preventDefault();flash(e.currentTarget,'Added ('+q+')');});
-    document.getElementById('buynow').addEventListener('click',e=>{e.preventDefault();flash(e.currentTarget,'Demo only');});
-    document.querySelectorAll('.faq-q').forEach(qq=>qq.addEventListener('click',()=>{ const it=qq.parentElement,a=it.querySelector('.faq-a'),open=it.classList.toggle('open'); a.style.maxHeight=open?a.scrollHeight+'px':'0'; }));
-  </script>
+  createRoot(document.getElementById('root')).render(h(App));
+</script>
 </body>
 </html>
