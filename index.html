@@ -300,7 +300,7 @@
   }
   .about { background: linear-gradient(180deg, #02060b 0%, #070e16 100%); }
   .showcase { background: linear-gradient(180deg, #070e16 0%, #0a141e 50%, #04080d 100%); min-height: 100vh; }
-  .about-inner { width: 100%; max-width: 1080px; text-align: center; }
+  .about-inner { width: 100%; max-width: 1120px; text-align: center; }
 
   .eyebrow {
     display: inline-flex; align-items: center; gap: 0.7rem;
@@ -317,20 +317,42 @@
     text-transform: uppercase; margin: 1rem 0 0;
   }
   .about .lead {
-    max-width: 40rem; margin: 1.6rem auto 8vh;
+    max-width: 42rem; margin: 1.6rem auto 5vh;
     font-size: clamp(1rem, 2vw, 1.25rem); line-height: 1.6; opacity: 0.75;
   }
-  .benefits { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2.4rem; }
-  .benefit svg {
-    width: 46px; height: 46px; stroke: var(--accent); stroke-width: 2;
-    fill: none; stroke-linecap: round; stroke-linejoin: round;
-    filter: drop-shadow(0 0 10px rgba(79,195,214,0.5));
+  .shop-bridge {
+    display: grid; grid-template-columns: 1fr 1.08fr; gap: clamp(1.6rem, 4vw, 4rem);
+    align-items: center; margin-top: 5vh; text-align: left;
   }
-  .benefit h3 {
-    font-family: 'Bebas Neue', sans-serif; font-size: 1.7rem;
-    letter-spacing: 0.05em; text-transform: uppercase; margin: 1.1rem 0 0.5rem;
+  .bridge-copy h3 {
+    font-family: 'Bebas Neue', sans-serif; font-size: clamp(3rem, 7vw, 6rem);
+    font-weight: 400; letter-spacing: 0.035em; line-height: 0.9; text-transform: uppercase;
   }
-  .benefit p { font-size: 0.95rem; line-height: 1.55; opacity: 0.68; }
+  .bridge-copy p {
+    margin-top: 1.2rem; max-width: 31rem; font-size: clamp(0.98rem, 1.4vw, 1.12rem);
+    line-height: 1.65; opacity: 0.72;
+  }
+  .bridge-tags { display: flex; flex-wrap: wrap; gap: 0.7rem; margin-top: 1.5rem; }
+  .bridge-tags span {
+    border: 1px solid rgba(238,244,248,0.16); border-radius: 999px; padding: 0.62rem 0.78rem;
+    font-family: 'Space Mono', ui-monospace, monospace; font-size: 0.58rem; letter-spacing: 0.12em;
+    text-transform: uppercase; color: rgba(238,244,248,0.68); background: rgba(255,255,255,0.035);
+  }
+  .bridge-media {
+    position: relative; border: 1px solid rgba(238,244,248,0.14); border-radius: 30px;
+    overflow: hidden; background: #03070c; box-shadow: 0 36px 120px rgba(0,0,0,0.42);
+  }
+  .bridge-media video { display: block; width: 100%; aspect-ratio: 16 / 9; object-fit: cover; }
+  .bridge-media::after {
+    content: ""; position: absolute; inset: 0; pointer-events: none;
+    background: linear-gradient(180deg, rgba(255,255,255,0.08), transparent 38%, rgba(2,6,11,0.32));
+  }
+  .bridge-caption {
+    position: absolute; left: 18px; right: 18px; bottom: 18px; z-index: 1;
+    display: flex; justify-content: space-between; gap: 1rem;
+    font-family: 'Space Mono', ui-monospace, monospace; font-size: 0.58rem;
+    letter-spacing: 0.13em; text-transform: uppercase; color: rgba(238,244,248,0.72);
+  }
 
   .showcase-inner {
     width: 100%; max-width: 1100px;
@@ -381,7 +403,9 @@
     font-size: 0.6rem; letter-spacing: 0.2em; text-transform: uppercase; opacity: 0.38;
   }
   @media (max-width: 820px) {
-    .benefits { grid-template-columns: 1fr; max-width: 360px; margin-left: auto; margin-right: auto; }
+    .shop-bridge { grid-template-columns: 1fr; text-align: center; }
+    .bridge-copy p { margin-left: auto; margin-right: auto; }
+    .bridge-tags { justify-content: center; }
     .showcase-inner { grid-template-columns: 1fr; gap: 5vh; text-align: center; }
     .showcase-copy { text-align: center; }
     .showcase-copy p { margin-left: auto; margin-right: auto; }
@@ -449,8 +473,8 @@
     <div class="reveals">
       <p class="rline" data-start="0.16" data-end="0.32">Enter the zone.</p>
       <p class="rline" data-start="0.34" data-end="0.50">Your life,<br>put back together.</p>
-      <p class="rline" data-start="0.52" data-end="0.68">Energy without the crash.</p>
-      <p class="rline" data-start="0.70" data-end="0.84">Made for focus.<span class="sub">Methods that actually work.</span></p>
+      <p class="rline" data-start="0.52" data-end="0.68">Cold focus, pulled from chaos.</p>
+      <p class="rline" data-start="0.70" data-end="0.84">Original is coming.<span class="sub">No payment today.</span></p>
     </div>
     <div class="scrollcue" id="cue">
       Scroll
@@ -468,8 +492,8 @@
       <p class="rline ocean" data-start="0.64" data-end="0.80">Focus, out of the chaos.</p>
     </div>
     <div class="ocean-climax" id="ocean-climax">
-      <h2>VORTEX is what you need.</h2>
-      <span>Zero sugar · 200 mg caffeine</span>
+      <h2>VORTEX is almost here.</h2>
+      <span>Original prelaunch concept</span>
     </div>
 
     <div class="reveals" id="man-reveals">
@@ -477,8 +501,8 @@
       <p class="rline man" data-start="0.38" data-end="0.62">Lock into the moment.</p>
     </div>
     <div class="ocean-climax" id="man-climax">
-      <h2>Welcome to the zone.</h2>
-      <span>Zero sugar · 200 mg caffeine</span>
+      <h2>Welcome to the cold drop.</h2>
+      <span>Join early access</span>
     </div>
   </div>
 
@@ -489,26 +513,23 @@
 
   <section class="about">
     <div class="about-inner">
-      <span class="eyebrow"><i></i>What it does</span>
-      <h2>Pulls you into focus.</h2>
-      <p class="lead">VORTEX is built for the moments that demand everything. It pulls scattered
-      attention into one clear current — sharp, sustained energy that lifts you up and never
-      drops you.</p>
-      <div class="benefits">
-        <div class="benefit">
-          <svg viewBox="0 0 48 48"><circle cx="24" cy="24" r="17"/><circle cx="24" cy="24" r="8"/></svg>
-          <h3>Razor focus</h3>
-          <p>200 mg of caffeine, tuned for clean, locked-in attention when it counts.</p>
+      <span class="eyebrow"><i></i>VORTEX Original</span>
+      <h2>The film becomes the shop.</h2>
+      <p class="lead">The first page should not stop on generic benefits. It should pull the can out of the film, drop it into the cold, and send people straight into the VORTEX Original prelaunch page.</p>
+      <div class="shop-bridge">
+        <div class="bridge-copy">
+          <h3>Enter the cold drop.</h3>
+          <p>VORTEX Original is still prelaunch, so the honest move is early access: show the world, collect demand, and keep every claim tied to what is actually ready.</p>
+          <div class="bridge-tags">
+            <span>One flavor</span>
+            <span>Prelaunch</span>
+            <span>No charge today</span>
+          </div>
+          <a class="cta" href="shop.html">Open the shop</a>
         </div>
-        <div class="benefit">
-          <svg viewBox="0 0 48 48"><polyline points="6 36 17 19 27 16 42 15"/></svg>
-          <h3>No crash</h3>
-          <p>A smooth climb and an even smoother landing. Energy without the drop-off.</p>
-        </div>
-        <div class="benefit">
-          <svg viewBox="0 0 48 48"><circle cx="24" cy="24" r="16"/><line x1="13" y1="13" x2="35" y2="35"/></svg>
-          <h3>Zero sugar</h3>
-          <p>All the drive, none of the sugar load. Just clarity, on demand.</p>
+        <div class="bridge-media">
+          <video src="media/vortex-cooler.mp4" autoplay muted loop playsinline preload="metadata" aria-label="VORTEX Original cooler concept"></video>
+          <div class="bridge-caption"><span>VORTEX cold drop</span><span>Early access</span></div>
         </div>
       </div>
     </div>
@@ -519,16 +540,15 @@
       <div class="showcase-copy">
         <span class="eyebrow"><i></i>The can</span>
         <h2>Hold the<br>whole storm.</h2>
-        <p>Every can is a captured vortex — a swirling ocean pressed into cold brushed aluminium.
-        Sixteen ounces of sharp, sustained focus you feel the instant it cracks. Grab it, spin it,
-        look closer: this is what calm under pressure looks like.</p>
+        <p>Every frame points toward one thing: VORTEX Original. The can, the ocean, and the cold drop
+        now lead into the prelaunch page where early demand can be measured honestly.</p>
         <ul class="specs">
-          <li><b>473</b><span>mL · 16 fl oz</span></li>
-          <li><b>200</b><span>mg caffeine</span></li>
-          <li><b>0</b><span>g sugar</span></li>
+          <li><b>473</b><span>mL target</span></li>
+          <li><b>200</b><span>mg target</span></li>
+          <li><b>0</b><span>g sugar target</span></li>
         </ul>
-        <a class="cta" href="shop.html">Pre-order now</a>
-        <p class="legal">Crafted for focus · © VORTEX</p>
+        <a class="cta" href="shop.html">Join early access</a>
+        <p class="legal">VORTEX prelaunch · © VORTEX</p>
       </div>
       <div class="showcase-stage">
         <canvas id="can-viewer" aria-label="Spin the VORTEX can"></canvas>
